@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Clone Quiz - PlayerOne</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .quiz-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .quiz-header h1 {
+            color: #1a1a1a;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .quiz-header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .progress-bar {
+            background: #f0f0f0;
+            border-radius: 10px;
+            height: 8px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .question {
+            display: none;
+        }
+
+        .question.active {
+            display: block;
+        }
+
+        .question h2 {
+            color: #1a1a1a;
+            font-size: 22px;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            padding: 16px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-back {
+            background: #f0f0f0;
+            color: #666;
+        }
+
+        .btn-back:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-back:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            flex: 1;
+        }
+
+        .btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-next:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result {
+            display: none;
+            text-align: center;
+        }
+
+        .result.active {
+            display: block;
+        }
+
+        .result-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .result h2 {
+            color: #1a1a1a;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .result p {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .result-box {
+            background: linear-gradient(135deg, #f8f9ff 0%, #f0f0ff 100%);
+            border: 2px solid #667eea;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .result-box h3 {
+            color: #667eea;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .result-box p {
+            color: #555;
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+
+        .btn-cta {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 100%;
+            padding: 16px;
+            font-size: 18px;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        @media (max-width: 600px) {
+            .quiz-container {
+                padding: 25px;
+            }
+
+            .quiz-header h1 {
+                font-size: 26px;
+            }
+
+            .question h2 {
+                font-size: 18px;
+            }
+
+            .option {
+                font-size: 14px;
+                padding: 14px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="quiz-header">
+            <h1>🎯 Find Your Perfect AI Plan</h1>
+            <p>Answer 5 quick questions to get your personalized recommendation</p>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress"></div>
+        </div>
+
+        <form id="quiz-form">
+            <!-- Question 1 -->
+            <div class="question active" data-question="1">
+                <h2>1. What's your primary goal with AI automation?</h2>
+                <div class="options">
+                    <div class="option" data-value="learn">I want to learn and implement AI myself</div>
+                    <div class="option" data-value="deploy">I need a ready-to-deploy system</div>
+                    <div class="option" data-value="scale">I want to build a full AI-powered business</div>
+                    <div class="option" data-value="consult">I'm looking for expert guidance and support</div>
+                </div>
+                <div class="navigation">
+                    <button type="button" class="btn btn-back" disabled>Back</button>
+                    <button type="button" class="btn btn-next" disabled>Next</button>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question" data-question="2">
+                <h2>2. What's your technical comfort level?</h2>
+                <div class="options">
+                    <div class="option" data-value="beginner">Beginner - I need step-by-step guidance</div>
+                    <div class="option" data-value="intermediate">Intermediate - I can follow instructions</div>
+                    <div class="option" data-value="advanced">Advanced - I'm comfortable with tech</div>
+                    <div class="option" data-value="expert">Expert - I can build from scratch</div>
+                </div>
+                <div class="navigation">
+                    <button type="button" class="btn btn-back">Back</button>
+                    <button type="button" class="btn btn-next" disabled>Next</button>
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question" data-question="3">
+                <h2>3. What's your preferred implementation timeline?</h2>
+                <div class="options">
+                    <div class="option" data-value="immediate">ASAP - I want to start today</div>
+                    <div class="option" data-value="week">Within a week</div>
+                    <div class="option" data-value="month">Within a month</div>
+                    <div class="option" data-value="flexible">No rush - quality over speed</div>
+                </div>
+                <div class="navigation">
+                    <button type="button" class="btn btn-back">Back</button>
+                    <button type="button" class="btn btn-next" disabled>Next</button>
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question" data-question="4">
+                <h2>4. What's your budget range?</h2>
+                <div class="options">
+                    <div class="option" data-value="budget">Under $50 - Just getting started</div>
+                    <div class="option" data-value="standard">$500-$1,500 - Ready to invest</div>
+                    <div class="option" data-value="premium">$2,000-$5,000 - Serious about results</div>
+                    <div class="option" data-value="enterprise">$5,000+ - Building an empire</div>
+                </div>
+                <div class="navigation">
+                    <button type="button" class="btn btn-back">Back</button>
+                    <button type="button" class="btn btn-next" disabled>Next</button>
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question" data-question="5">
+                <h2>5. What support level do you need?</h2>
+                <div class="options">
+                    <div class="option" data-value="self">Self-guided - I'll figure it out</div>
+                    <div class="option" data-value="community">Community support - Access to forums</div>
+                    <div class="option" data-value="priority">Priority support - Direct help when needed</div>
+                    <div class="option" data-value="done-for-you">Done-for-you - Build it for me</div>
+                </div>
+                <div class="navigation">
+                    <button type="button" class="btn btn-back">Back</button>
+                    <button type="button" class="btn btn-next" disabled>Next</button>
+                </div>
+            </div>
+
+            <!-- Result -->
+            <div class="result" id="result">
+                <div class="result-icon">🎉</div>
+                <h2>Your Perfect Match Is Ready!</h2>
+                <p>Based on your answers, we've identified the ideal plan to accelerate your AI journey.</p>
+                
+                <div class="result-box" id="recommendation">
+                    <h3 id="plan-name">Loading your recommendation...</h3>
+                    <p id="plan-description"></p>
+                </div>
+
+                <a href="https://forms.gle/bfbonqABdYHCSnJT9" class="btn-cta" target="_blank">
+                    Get Your Personalized Plan →
+                </a>
+                
+                <p style="margin-top: 20px; font-size: 14px; color: #999;">
+                    Or <a href="index.html" style="color: #667eea; text-decoration: underline;">return to homepage</a>
+                </p>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const questions = document.querySelectorAll('.question');
+        const result = document.getElementById('result');
+        const progress = document.getElementById('progress');
+        const totalQuestions = questions.length;
+
+        let currentQuestion = 0;
+        let answers = {};
+
+        // Option selection
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                const question = this.closest('.question');
+                const questionNum = question.dataset.question;
+                
+                // Remove selected from all options in this question
+                question.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+                
+                // Add selected to clicked option
+                this.classList.add('selected');
+                
+                // Store answer
+                answers[questionNum] = this.dataset.value;
+                
+                // Enable next button
+                question.querySelector('.btn-next').disabled = false;
+            });
+        });
+
+        // Navigation
+        document.querySelectorAll('.btn-next').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (this.disabled) return;
+                
+                questions[currentQuestion].classList.remove('active');
+                currentQuestion++;
+                
+                if (currentQuestion >= totalQuestions) {
+                    showResult();
+                } else {
+                    questions[currentQuestion].classList.add('active');
+                    updateProgress();
+                    updateButtons();
+                }
+            });
+        });
+
+        document.querySelectorAll('.btn-back').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (currentQuestion === 0) return;
+                
+                questions[currentQuestion].classList.remove('active');
+                currentQuestion--;
+                questions[currentQuestion].classList.add('active');
+                updateProgress();
+                updateButtons();
+            });
+        });
+
+        function updateProgress() {
+            const percentage = ((currentQuestion) / totalQuestions) * 100;
+            progress.style.width = percentage + '%';
+        }
+
+        function updateButtons() {
+            const currentQ = questions[currentQuestion];
+            const backBtn = currentQ.querySelector('.btn-back');
+            const nextBtn = currentQ.querySelector('.btn-next');
+            
+            backBtn.disabled = currentQuestion === 0;
+            
+            // Check if option is selected
+            const selectedOption = currentQ.querySelector('.option.selected');
+            nextBtn.disabled = !selectedOption;
+        }
+
+        function showResult() {
+            progress.style.width = '100%';
+            
+            // Calculate recommendation based on answers
+            const recommendation = calculateRecommendation();
+            
+            document.getElementById('plan-name').textContent = recommendation.name;
+            document.getElementById('plan-description').textContent = recommendation.description;
+            
+            questions.forEach(q => q.style.display = 'none');
+            result.classList.add('active');
+        }
+
+        function calculateRecommendation() {
+            // Simple logic based on budget answer
+            const budget = answers['4'];
+            
+            const recommendations = {
+                'budget': {
+                    name: '🎯 The Blueprint - $9.90',
+                    description: 'Perfect for getting started! Get instant access to our AI Super Prompt and deploy your first income stream within 72 hours. No subscriptions, no hidden fees.'
+                },
+                'standard': {
+                    name: '⚡ The DFY System - $999',
+                    description: 'Ready to accelerate? We\'ll build your complete AI automation system for you. Done-for-you setup with priority support. Zero headaches.'
+                },
+                'premium': {
+                    name: '🚀 The Accelerator + Bonus - Custom',
+                    description: 'You\'re serious about results. Get our full DFY system plus exclusive bonuses and extended support to maximize your ROI.'
+                },
+                'enterprise': {
+                    name: '👑 The Full Empire - $4,999',
+                    description: 'Build your AI-powered empire! Complete turnkey system with commission structure, Founders Circle eligibility, and everything you need to scale.'
+                }
+            };
+
+            return recommendations[budget] || recommendations['standard'];
+        }
+    </script>
+</body>
+</html>

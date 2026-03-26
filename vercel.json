@@ -3,6 +3,10 @@
     {
       "source": "/",
       "destination": "/playerone.html"
+    },
+    {
+      "source": "/quiz",
+      "destination": "/quiz.html"
     }
   ]
 }
