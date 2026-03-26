@@ -1,9 +1,809 @@
+<!-- ============================================
+     PLAYERONE QUIZ V2 — BETTERME-STYLE FLOW
+     Copy this entire block into VS Code
+============================================= -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Clone Quiz - PlayerOne</title>
+    <title>AI Clone Quiz | PlayerOne</title>
+    <style>
+        /* === BASE STYLES === */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #ffffff;
+            color: #333333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* === TOP NAV === */
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #e5e5e5;
+            margin-bottom: 30px;
+        }
+        .nav-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            opacity: 0.5;
+        }
+        .nav-btn.active { opacity: 1; }
+        .nav-title { font-weight: 600; font-size: 1.1rem; }
+
+        /* === PROGRESS BAR === */
+        .progress-container {
+            width: 100%;
+            height: 4px;
+            background: #e5e5e5;
+            border-radius: 2px;
+            margin-bottom: 30px;
+        }
+        .progress-fill {
+            height: 100%;
+            width: 11%;
+            background: linear-gradient(90deg, #4a90d9 0%, #64a5b5 100%);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        /* === QUESTION CARD === */
+        .question-card {
+            background: #fafafa;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+        .question-text {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: #333333;
+        }
+        .question-subtext {
+            font-size: 1rem;
+            color: #666666;
+            margin-bottom: 20px;
+        }
+
+        /* === OPTIONS === */
+        .options { list-style: none; }
+        .options li { margin-bottom: 12px; }
+        .options label {
+            display: flex;
+            align-items: center;
+            padding: 18px 20px;
+            background: #ffffff;
+            border: 2px solid #e5e5e5;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1rem;
+            color: #555555;
+        }
+        .options label:hover {
+            border-color: #4a90d9;
+            background: #f0f7ff;
+        }
+        .options label.selected {
+            border-color: #4a90d9;
+            background: #f0f7ff;
+        }
+        .options input[type="radio"],
+        .options input[type="checkbox"] {
+            margin-right: 15px;
+            width: 20px;
+            height: 20px;
+        }
+        .option-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        /* === SUMMARY SLIDE === */
+        .summary-card {
+            text-align: center;
+            padding: 50px 30px;
+        }
+        .summary-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #333333;
+        }
+        .summary-text {
+            font-size: 1.1rem;
+            color: #666666;
+            line-height: 1.8;
+        }
+
+        /* === BUTTONS === */
+        .btn-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 25px;
+        }
+        .btn {
+            padding: 16px 40px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: #4a90d9;
+            color: #ffffff;
+        }
+        .btn-primary:hover { background: #3a80c9; }
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .btn-back {
+            background: #ffffff;
+            border: 2px solid #e5e5e5;
+            color: #666666;
+            margin-right: 15px;
+        }
+        .btn-back:hover { background: #fafafa; }
+
+        /* === FOOTER === */
+        .footer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e5e5;
+        }
+        .footer a {
+            color: #999999;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .footer a:hover { color: #666666; }
+
+        /* === RESULT CARD === */
+        .result-card {
+            text-align: center;
+            padding: 40px 30px;
+        }
+        .result-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #333333;
+        }
+        .result-description {
+            font-size: 1.1rem;
+            color: #555555;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+        .result-features {
+            text-align: left;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 25px 0;
+        }
+        .result-features ul { list-style: none; }
+        .result-features li {
+            padding: 12px 0;
+            border-bottom: 1px solid #e5e5e5;
+            color: #555555;
+        }
+        .result-features li:last-child { border-bottom: none; }
+        .result-features li::before {
+            content: "✓ ";
+            color: #4a90d9;
+            font-weight: 700;
+        }
+        .result-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #4a90d9;
+            margin: 20px 0;
+        }
+        .result-cta {
+            display: inline-block;
+            background: #4a90d9;
+            color: #ffffff;
+            padding: 18px 40px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-top: 20px;
+            transition: background 0.2s;
+        }
+        .result-cta:hover { background: #3a80c9; }
+
+        /* === LOADING === */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 60px 20px;
+        }
+        .loading.active { display: block; }
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #e5e5e5;
+            border-top-color: #4a90d9;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 600px) {
+            .question-text { font-size: 1.2rem; }
+            .btn { width: 100%; margin-bottom: 10px; }
+            .btn-container { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Top Navigation -->
+        <div class="top-nav">
+            <button class="nav-btn" id="backBtn" onclick="prevStep()" style="display:none;">←</button>
+            <div class="nav-title">My Profile</div>
+            <button class="nav-btn" id="forwardBtn" onclick="nextStep()" style="visibility:hidden;">→</button>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <!-- Loading Screen -->
+        <div class="loading" id="loadingScreen">
+            <div class="loading-spinner"></div>
+            <p style="color: #666666; font-size: 1.1rem;">Analyzing your answers...</p>
+            <p style="color: #999999; font-size: 0.95rem; margin-top: 10px;">Matching you to your AI Clone profile...</p>
+        </div>
+
+        <!-- STEP 1: Gender -->
+        <div class="question-card" data-step="1">
+            <div class="question-text">What's your gender?</div>
+            <ul class="options">
+                <li>
+                    <label>
+                        <input type="radio" name="q1" value="male">
+                        <span class="option-icon">👨</span>
+                        <span>Male</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q1" value="female">
+                        <span class="option-icon">👩</span>
+                        <span>Female</span>
+                    </label>
+                </li>
+            </ul>
+            <div class="btn-container">
+                <button class="btn btn-primary" onclick="nextStep()" disabled id="btn1">Continue →</button>
+            </div>
+        </div>
+
+        <!-- STEP 2: Age Range -->
+        <div class="question-card" data-step="2" style="display:none;">
+            <div class="question-text">Select your age</div>
+            <ul class="options">
+                <li>
+                    <label>
+                        <input type="radio" name="q2" value="18-24">
+                        <span class="option-icon">🎓</span>
+                        <span>18-24</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q2" value="25-34">
+                        <span class="option-icon">💼</span>
+                        <span>25-34</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q2" value="35-44">
+                        <span class="option-icon">🚀</span>
+                        <span>35-44</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q2" value="45+">
+                        <span class="option-icon">🎯</span>
+                        <span>45+</span>
+                    </label>
+                </li>
+            </ul>
+            <div class="btn-container">
+                <button class="btn btn-back" onclick="prevStep()">← Back</button>
+                <button class="btn btn-primary" onclick="nextStep()" disabled id="btn2">Continue →</button>
+            </div>
+        </div>
+
+        <!-- STEP 3: Main Goal -->
+        <div class="question-card" data-step="3" style="display:none;">
+            <div class="question-text">What's your main goal?</div>
+            <ul class="options">
+                <li>
+                    <label>
+                        <input type="radio" name="q3" value="make-money">
+                        <span class="option-icon">💰</span>
+                        <span>Make more money</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q3" value="grow-career">
+                        <span class="option-icon">📈</span>
+                        <span>Grow in my career</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q3" value="be-boss">
+                        <span class="option-icon">👑</span>
+                        <span>Be my own boss</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q3" value="work-life-balance">
+                        <span class="option-icon">⚖️</span>
+                        <span>Improve my work-life balance</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q3" value="travel">
+                        <span class="option-icon">✈️</span>
+                        <span>Travel the world</span>
+                    </label>
+                </li>
+            </ul>
+            <div class="btn-container">
+                <button class="btn btn-back" onclick="prevStep()">← Back</button>
+                <button class="btn btn-primary" onclick="nextStep()" disabled id="btn3">Continue →</button>
+            </div>
+        </div>
+
+        <!-- STEP 4: Summary Slide -->
+        <div class="question-card summary-card" data-step="4" style="display:none;">
+            <div class="summary-title">Earn more while working less</div>
+            <div class="summary-text">
+                <p style="margin-bottom: 20px;">In 28 days, you'll learn practical AI tools to grow your income without stress.</p>
+                <p><strong>156 AI Agent Skills.</strong> Build your AI Clone. Deploy your empire.</p>
+            </div>
+            <div class="btn-container" style="justify-content: center; margin-top: 30px;">
+                <button class="btn btn-primary" onclick="nextStep()">Continue →</button>
+            </div>
+        </div>
+
+        <!-- STEP 5: Income Sources (Multi-select) -->
+        <div class="question-card" data-step="5" style="display:none;">
+            <div class="question-text">What are your current income sources?</div>
+            <div class="question-subtext">Choose all that apply</div>
+            <ul class="options">
+                <li>
+                    <label>
+                        <input type="checkbox" name="q5" value="full-time-job">
+                        <span class="option-icon">🏢</span>
+                        <span>Full-time job</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox" name="q5" value="own-business">
+                        <span class="option-icon">🏪</span>
+                        <span>My own business</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox" name="q5" value="freelance-passive">
+                        <span class="option-icon">💻</span>
+                        <span>Freelance or passive income</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox" name="q5" value="other">
+                        <span class="option-icon">📦</span>
+                        <span>Other</span>
+                    </label>
+                </li>
+            </ul>
+            <div class="btn-container">
+                <button class="btn btn-back" onclick="prevStep()">← Back</button>
+                <button class="btn btn-primary" onclick="nextStep()" disabled id="btn5">Continue →</button>
+            </div>
+        </div>
+
+        <!-- STEP 6: Work Schedule -->
+        <div class="question-card" data-step="6" style="display:none;">
+            <div class="question-text">What is your work schedule like?</div>
+            <ul class="options">
+                <li>
+                    <label>
+                        <input type="radio" name="q6" value="9-to-5">
+                        <span class="option-icon">🕘</span>
+                        <span>9 to 5</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q6" value="night-shifts">
+                        <span class="option-icon">🌙</span>
+                        <span>Night shifts</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q6" value="flexible">
+                        <span class="option-icon">🔄</span>
+                        <span>My hours are flexible</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q6" value="retired">
+                        <span class="option-icon">🏖️</span>
+                        <span>I'm retired</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q6" value="not-working">
+                        <span class="option-icon">⏸️</span>
+                        <span>I'm currently not working</span>
+                    </label>
+                </li>
+            </ul>
+            <div class="btn-container">
+                <button class="btn btn-back" onclick="prevStep()">← Back</button>
+                <button class="btn btn-primary" onclick="nextStep()" disabled id="btn6">Continue →</button>
+            </div>
+        </div>
+
+        <!-- STEP 7: Flexibility Desire -->
+        <div class="question-card" data-step="7" style="display:none;">
+            <div class="question-text">Do you wish you had more control over your work hours and location?</div>
+            <ul class="options">
+                <li>
+                    <label>
+                        <input type="radio" name="q7" value="yes-flexibility">
+                        <span class="option-icon">✅</span>
+                        <span>Yes, I want more flexibility</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q7" value="no-comfortable">
+                        <span class="option-icon">❌</span>
+                        <span>No, I'm comfortable as is</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q7" value="not-sure">
+                        <span class="option-icon">🤔</span>
+                        <span>I'm not sure</span>
+                    </label>
+                </li>
+            </ul>
+            <div class="btn-container">
+                <button class="btn btn-back" onclick="prevStep()">← Back</button>
+                <button class="btn btn-primary" onclick="nextStep()" disabled id="btn7">Continue →</button>
+            </div>
+        </div>
+
+        <!-- STEP 8: Job Challenges (Multi-select) -->
+        <div class="question-card" data-step="8" style="display:none;">
+            <div class="question-text">What are the challenges with your current job?</div>
+            <div class="question-subtext">Choose all that apply</div>
+            <ul class="options">
+                <li>
+                    <label>
+                        <input type="checkbox" name="q8" value="repetitive-draining">
+                        <span class="option-icon">😓</span>
+                        <span>It feels repetitive and draining</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox" name="q8" value="underpaid">
+                        <span class="option-icon">💸</span>
+                        <span>I feel underpaid for my effort</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox" name="q8" value="not-learning">
+                        <span class="option-icon">📚</span>
+                        <span>I'm not learning new skills</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox" name="q8" value="not-fulfilled">
+                        <span class="option-icon">😞</span>
+                        <span>I don't feel fulfilled by what I do</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox" name="q8" value="job-insecurity">
+                        <span class="option-icon">⚠️</span>
+                        <span>I worry my job isn't secure</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox" name="q8" value="no-future">
+                        <span class="option-icon">🔮</span>
+                        <span>I don't see a future in my career</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox" name="q8" value="other">
+                        <span class="option-icon">📦</span>
+                        <span>Other</span>
+                    </label>
+                </li>
+            </ul>
+            <div class="btn-container">
+                <button class="btn btn-back" onclick="prevStep()">← Back</button>
+                <button class="btn btn-primary" onclick="submitQuiz()" id="btn8">Get Diagnosis →</button>
+            </div>
+        </div>
+
+        <!-- STEP 9: Result Cards (4 Profiles) -->
+        <!-- Result: Starter -->
+        <div class="result-card" id="result-starter" style="display:none;">
+            <div class="result-title">Your Diagnosis: The Starter</div>
+            <div class="result-description">
+                <p>You're at the start. You have limited capital to invest. You're testing.</p>
+                <p style="margin-top: 15px;"><strong>This is smart. Not weak. SMART.</strong></p>
+            </div>
+            <div class="result-features">
+                <strong>Your AI Clone will:</strong>
+                <ul>
+                    <li>Teach you AI basics (5 min/day)</li>
+                    <li>Help you post consistently (7-day challenge)</li>
+                    <li>Build your first funnel (simple, converts)</li>
+                    <li>Show you proof (Regine, Jay, Gary)</li>
+                </ul>
+            </div>
+            <div style="margin: 25px 0;">
+                <strong style="color: #666666;">RECOMMENDED: PIONEER</strong>
+                <div class="result-price">$9.90</div>
+            </div>
+            <a href="https://nas.io/theonepercentbetterprogram/digital-files/the-1-better-program" class="result-cta">Start Your Game — $9.90</a>
+        </div>
+
+        <!-- Result: Builder -->
+        <div class="result-card" id="result-builder" style="display:none;">
+            <div class="result-title">Your Diagnosis: The Builder</div>
+            <div class="result-description">
+                <p>You're ready to build. You have some capital to invest. You're serious.</p>
+                <p style="margin-top: 15px;"><strong>You don't need 'test.' You need SYSTEM.</strong></p>
+            </div>
+            <div class="result-features">
+                <strong>Your AI Clone will:</strong>
+                <ul>
+                    <li>156 AI Agent Skills (spawn sub-agents on demand)</li>
+                    <li>7 Days AI Clone Yourself Playbook (INCLUDED)</li>
+                    <li>Business in a Box (DFY funnel, content, system)</li>
+                </ul>
+            </div>
+            <div style="margin: 25px 0;">
+                <strong style="color: #666666;">RECOMMENDED: CREATOR</strong>
+                <div class="result-price">$999</div>
+            </div>
+            <a href="http://tiny.cc/creatorsbizguide" class="result-cta">Start Your Game — $999</a>
+            <p style="color: #999999; font-size: 0.9rem; margin-top: 15px;">53 Empire spots remaining.</p>
+        </div>
+
+        <!-- Result: Scaler -->
+        <div class="result-card" id="result-scaler" style="display:none;">
+            <div class="result-title">Your Diagnosis: The Scaler</div>
+            <div class="result-description">
+                <p>You're ready to scale. You have significant capital to invest. You're all-in.</p>
+                <p style="margin-top: 15px;"><strong>You don't need 'build.' You need EMPIRE.</strong></p>
+            </div>
+            <div class="result-features">
+                <strong>Your AI Clone will:</strong>
+                <ul>
+                    <li>156 AI Agent Skills (spawn sub-agents on demand)</li>
+                    <li>7 Days AI Clone Yourself Playbook (INCLUDED)</li>
+                    <li>Business Empire in a Box (white-label)</li>
+                    <li>10% override perpetually (3 levels)</li>
+                    <li>Instant BOSS status</li>
+                </ul>
+            </div>
+            <div style="margin: 25px 0;">
+                <strong style="color: #666666;">RECOMMENDED: EMPIRE</strong>
+                <div class="result-price">$4,999</div>
+            </div>
+            <a href="http://tiny.cc/creatorsempireguide" class="result-cta">Start Your Game — $4,999</a>
+        </div>
+
+        <!-- Result: Empire Builder -->
+        <div class="result-card" id="result-empire" style="display:none;">
+            <div class="result-title">Your Diagnosis: The Empire Builder</div>
+            <div class="result-description">
+                <p>You're empire-building. You have maximum capital to invest. No limits.</p>
+                <p style="margin-top: 15px;"><strong>You don't need 'system.' You need PARTNERSHIP.</strong></p>
+            </div>
+            <div class="result-features">
+                <strong>Your AI Clone will:</strong>
+                <ul>
+                    <li>156 AI Agent Skills (spawn sub-agents on demand)</li>
+                    <li>7 Days AI Clone Yourself Playbook (INCLUDED)</li>
+                    <li>Business Empire in a Box (white-label)</li>
+                    <li>10% override perpetually (3 levels)</li>
+                    <li>Instant BOSS status</li>
+                    <li>VIP onboarding (Gary 1-on-1 call)</li>
+                    <li>White-glove setup (we build FOR you)</li>
+                </ul>
+            </div>
+            <div style="margin: 25px 0;">
+                <strong style="color: #666666;">RECOMMENDED: EMPIRE + VIP</strong>
+                <div class="result-price">$4,999</div>
+            </div>
+            <a href="http://tiny.cc/creatorsempireguide" class="result-cta">Start Your Game — $4,999 + VIP</a>
+            <p style="color: #999999; font-size: 0.9rem; margin-top: 15px;">Then reply to confirmation email with subject "VIP" for Gary's 1-on-1 call.</p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <a href="/quiz/privacy-policy">Privacy</a>
+            <span>|</span>
+            <a href="/quiz/terms">Terms</a>
+        </div>
+    </div>
+
+    <script>
+        // ✅ Your Google Apps Script Web App URL
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyXxViL0Ti87Q-GuUP64hikQQkcRcBhJHeNWUcP8F5OMO2SZNcEGA45f6HZo31EsNlR-w/exec';
+
+        // Quiz data storage
+        let quizData = {
+            q1: '',
+            q2: '',
+            q3: '',
+            q4: '',
+            q5: [],
+            q6: '',
+            q7: '',
+            q8: [],
+            profile: ''
+        };
+
+        let currentStep = 1;
+        const totalSteps = 8;
+
+        // Option selection handling (single-select)
+        document.querySelectorAll('input[type="radio"]').forEach(input => {
+            input.addEventListener('change', function() {
+                this.closest('.options').querySelectorAll('label').forEach(label => {
+                    label.classList.remove('selected');
+                });
+                this.closest('label').classList.add('selected');
+                this.closest('.question-card').querySelector('.btn-primary').disabled = false;
+                quizData[this.name] = this.value;
+            });
+        });
+
+        // Option selection handling (multi-select)
+        document.querySelectorAll('input[type="checkbox"]').forEach(input => {
+            input.addEventListener('change', function() {
+                const checkboxes = this.closest('.options').querySelectorAll('input[type="checkbox"]:checked');
+                const btn = this.closest('.question-card').querySelector('.btn-primary');
+                btn.disabled = checkboxes.length === 0;
+                
+                // Store values
+                const name = this.name;
+                quizData[name] = Array.from(checkboxes).map(cb => cb.value);
+            });
+        });
+
+        // Navigation
+        function nextStep() {
+            document.querySelector(`.question-card[data-step="${currentStep}"]`).style.display = 'none';
+            currentStep++;
+            document.querySelector(`.question-card[data-step="${currentStep}"]`).style.display = 'block';
+            updateProgress();
+            updateNavButtons();
+        }
+
+        function prevStep() {
+            document.querySelector(`.question-card[data-step="${currentStep}"]`).style.display = 'none';
+            currentStep--;
+            document.querySelector(`.question-card[data-step="${currentStep}"]`).style.display = 'block';
+            updateProgress();
+            updateNavButtons();
+        }
+
+        function updateProgress() {
+            const percentage = (currentStep / totalSteps) * 100;
+            document.getElementById('progressFill').style.width = percentage + '%';
+        }
+
+        function updateNavButtons() {
+            const backBtn = document.getElementById('backBtn');
+            backBtn.style.display = currentStep > 1 ? 'block' : 'none';
+        }
+
+        // Submit quiz
+        function submitQuiz() {
+            // Determine profile based on Q5 (income sources) as proxy for budget
+            const incomeSources = quizData.q5;
+            if (incomeSources.includes('full-time-job') && !incomeSources.includes('own-business')) {
+                quizData.profile = 'starter';
+            } else if (incomeSources.includes('own-business') || incomeSources.includes('freelance-passive')) {
+                quizData.profile = 'builder';
+            } else if (incomeSources.length >= 2) {
+                quizData.profile = 'scaler';
+            } else {
+                quizData.profile = 'empire';
+            }
+
+            // Show loading
+            document.querySelector(`.question-card[data-step="${currentStep}"]`).style.display = 'none';
+            document.getElementById('loadingScreen').classList.add('active');
+            document.getElementById('progressFill').style.width = '100%';
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.remove('active');
+                document.getElementById(`result-${quizData.profile}`).style.display = 'block';
+                document.querySelector('.top-nav').style.display = 'none';
+                document.querySelector('.progress-container').style.display = 'none';
+                document.querySelector('.footer').style.display = 'none';
+                
+                submitToGoogleSheets();
+            }, 2000);
+        }
+
+        // Submit to Google Sheets
+        function submitToGoogleSheets() {
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(quizData)
+            }).catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
     <style>
         * {
             margin: 0;
