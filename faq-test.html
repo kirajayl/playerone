@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>FAQ Test</title>
+    <style>
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: #fafafa;
+        }
+        .faq-answer.open {
+            max-height: 500px;
+        }
+        .faq-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+            display: inline-block;
+        }
+        .faq-icon.rotated {
+            transform: rotate(45deg);
+        }
+    </style>
+</head>
+<body style="font-family: Arial, sans-serif; padding: 40px;">
+    <h1>FAQ Test</h1>
+    
+    <div style="margin-bottom: 15px; border: 1px solid #e5e5e5; border-radius: 8px; overflow: hidden;">
+        <button onclick="toggleFaq(this)" style="width: 100%; padding: 20px; text-align: left; background: #ffffff; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; font-weight: 600; color: #333333;">
+            <span>Test Question 1</span>
+            <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+            <div style="padding: 20px; color: #555555;">
+                This is the answer to test question 1.
+            </div>
+        </div>
+    </div>
+    
+    <div style="margin-bottom: 15px; border: 1px solid #e5e5e5; border-radius: 8px; overflow: hidden;">
+        <button onclick="toggleFaq(this)" style="width: 100%; padding: 20px; text-align: left; background: #ffffff; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; font-weight: 600; color: #333333;">
+            <span>Test Question 2</span>
+            <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+            <div style="padding: 20px; color: #555555;">
+                This is the answer to test question 2.
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function toggleFaq(button) {
+            console.log('CLICK DETECTED!');
+            const answer = button.nextElementSibling;
+            const icon = button.querySelector('.faq-icon');
+            const isOpen = answer.classList.contains('open');
+            
+            document.querySelectorAll('.faq-answer').forEach(item => {
+                item.classList.remove('open');
+            });
+            document.querySelectorAll('.faq-icon').forEach(item => {
+                item.classList.remove('rotated');
+                item.textContent = '+';
+            });
+            
+            if (!isOpen) {
+                answer.classList.add('open');
+                icon.classList.add('rotated');
+                icon.textContent = '−';
+            }
+        }
+    </script>
+</body>
+</html>
