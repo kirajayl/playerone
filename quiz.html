@@ -961,11 +961,20 @@
         function submitToGoogleSheets() {
             console.log('Submitting to Google Sheets:', quizData);
             
+            // Convert arrays to comma-separated strings before sending
+            const dataToSend = { ...quizData };
+            if (Array.isArray(dataToSend.q7)) {
+                dataToSend.q7 = dataToSend.q7.join(', ');
+            }
+            if (Array.isArray(dataToSend.q10)) {
+                dataToSend.q10 = dataToSend.q10.join(', ');
+            }
+            
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(quizData)
+                body: JSON.stringify(dataToSend)
             })
             .then(response => {
                 console.log('Response status:', response.status);
