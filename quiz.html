@@ -827,7 +827,7 @@
 
     <script>
         // ✅ Your Google Apps Script Web App URL
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyXxViL0Ti87Q-GuUP64hikQQkcRcBhJHeNWUcP8F5OMO2SZNcEGA45f6HZo31EsNlR-w/exec';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzEWj4BY_68Rcmg61alcbNwZupOH6upVUCjGXSlx73ehnIYsst-UbvHLpZTgb5COHP6pw/exec';
 
         // Quiz data storage
         let quizData = {
@@ -959,12 +959,21 @@
 
         // Submit to Google Sheets
         function submitToGoogleSheets() {
+            console.log('Submitting to Google Sheets:', quizData);
+            
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(quizData)
-            }).catch(error => console.error('Error:', error));
+            })
+            .then(response => {
+                console.log('Response status:', response.status);
+                console.log('✅ Data sent to Google Sheets');
+            })
+            .catch(error => {
+                console.error('❌ Error sending to Google Sheets:', error);
+            });
         }
     </script>
 </body>
