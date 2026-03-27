@@ -451,8 +451,86 @@
             </div>
         </div>
 
-        <!-- STEP 5: Summary Slide -->
-        <div class="question-card summary-card" data-step="5" style="display:none;">
+        <!-- STEP 5: Timeline (NEW) -->
+        <div class="question-card" data-step="5" style="display:none;">
+            <div class="question-text">When do you want to start implementing AI?</div>
+            <ul class="options">
+                <li>
+                    <label>
+                        <input type="radio" name="q5" value="immediately">
+                        <span class="option-icon">🚀</span>
+                        <span>Immediately (this week)</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q5" value="30-days">
+                        <span class="option-icon">📅</span>
+                        <span>Within 30 days</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q5" value="90-days">
+                        <span class="option-icon">🗓️</span>
+                        <span>Within 90 days</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q5" value="exploring">
+                        <span class="option-icon">🔍</span>
+                        <span>Just exploring (no timeline)</span>
+                    </label>
+                </li>
+            </ul>
+            <div class="btn-container">
+                <button class="btn btn-back" onclick="prevStep()">← Back</button>
+                <button class="btn btn-primary" onclick="nextStep()" disabled id="btn5">Continue →</button>
+            </div>
+        </div>
+
+        <!-- STEP 6: Previous Experience (NEW) -->
+        <div class="question-card" data-step="6" style="display:none;">
+            <div class="question-text">Have you invested in AI courses or tools before?</div>
+            <ul class="options">
+                <li>
+                    <label>
+                        <input type="radio" name="q6" value="first-time">
+                        <span class="option-icon">🌱</span>
+                        <span>No, this is my first time</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q6" value="under-500">
+                        <span class="option-icon">📚</span>
+                        <span>Yes, spent under $500</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q6" value="500-2000">
+                        <span class="option-icon">💼</span>
+                        <span>Yes, spent $500-$2,000</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q6" value="2000-plus">
+                        <span class="option-icon">🎯</span>
+                        <span>Yes, spent $2,000+ (still looking for the right system)</span>
+                    </label>
+                </li>
+            </ul>
+            <div class="btn-container">
+                <button class="btn btn-back" onclick="prevStep()">← Back</button>
+                <button class="btn btn-primary" onclick="nextStep()" disabled id="btn6">Continue →</button>
+            </div>
+        </div>
+
+        <!-- STEP 7: Summary Slide -->
+        <div class="question-card summary-card" data-step="7" style="display:none;">
             <div class="summary-title">Earn more while working less</div>
             <div class="summary-text">
                 <p style="margin-bottom: 20px;">In 28 days, you'll learn practical AI tools to grow your income without stress.</p>
@@ -463,115 +541,37 @@
             </div>
         </div>
 
-        <!-- STEP 6: Income Sources (Multi-select) -->
-        <div class="question-card" data-step="6" style="display:none;">
+        <!-- STEP 8: Income Sources (Multi-select) -->
+        <div class="question-card" data-step="8" style="display:none;">
             <div class="question-text">What are your current income sources?</div>
             <div class="question-subtext">Choose all that apply</div>
             <ul class="options">
                 <li>
                     <label>
-                        <input type="checkbox" name="q6" value="full-time-job">
+                        <input type="checkbox" name="q8" value="full-time-job">
                         <span class="option-icon">🏢</span>
                         <span>Full-time job</span>
                     </label>
                 </li>
                 <li>
                     <label>
-                        <input type="checkbox" name="q6" value="own-business">
+                        <input type="checkbox" name="q8" value="own-business">
                         <span class="option-icon">🏪</span>
                         <span>My own business</span>
                     </label>
                 </li>
                 <li>
                     <label>
-                        <input type="checkbox" name="q6" value="freelance-passive">
+                        <input type="checkbox" name="q8" value="freelance-passive">
                         <span class="option-icon">💻</span>
                         <span>Freelance or passive income</span>
                     </label>
                 </li>
                 <li>
                     <label>
-                        <input type="checkbox" name="q6" value="other">
+                        <input type="checkbox" name="q8" value="other">
                         <span class="option-icon">📦</span>
                         <span>Other</span>
-                    </label>
-                </li>
-            </ul>
-            <div class="btn-container">
-                <button class="btn btn-back" onclick="prevStep()">← Back</button>
-                <button class="btn btn-primary" onclick="nextStep()" disabled id="btn6">Continue →</button>
-            </div>
-        </div>
-
-        <!-- STEP 7: Work Schedule -->
-        <div class="question-card" data-step="7" style="display:none;">
-            <div class="question-text">What is your work schedule like?</div>
-            <ul class="options">
-                <li>
-                    <label>
-                        <input type="radio" name="q7" value="9-to-5">
-                        <span class="option-icon">🕘</span>
-                        <span>9 to 5</span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input type="radio" name="q7" value="night-shifts">
-                        <span class="option-icon">🌙</span>
-                        <span>Night shifts</span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input type="radio" name="q7" value="flexible">
-                        <span class="option-icon">🔄</span>
-                        <span>My hours are flexible</span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input type="radio" name="q7" value="retired">
-                        <span class="option-icon">🏖️</span>
-                        <span>I'm retired</span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input type="radio" name="q7" value="not-working">
-                        <span class="option-icon">⏸️</span>
-                        <span>I'm currently not working</span>
-                    </label>
-                </li>
-            </ul>
-            <div class="btn-container">
-                <button class="btn btn-back" onclick="prevStep()">← Back</button>
-                <button class="btn btn-primary" onclick="nextStep()" disabled id="btn7">Continue →</button>
-            </div>
-        </div>
-
-        <!-- STEP 8: Flexibility Desire -->
-        <div class="question-card" data-step="8" style="display:none;">
-            <div class="question-text">Do you wish you had more control over your work hours and location?</div>
-            <ul class="options">
-                <li>
-                    <label>
-                        <input type="radio" name="q8" value="yes-flexibility">
-                        <span class="option-icon">✅</span>
-                        <span>Yes, I want more flexibility</span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input type="radio" name="q8" value="no-comfortable">
-                        <span class="option-icon">❌</span>
-                        <span>No, I'm comfortable as is</span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input type="radio" name="q8" value="not-sure">
-                        <span class="option-icon">🤔</span>
-                        <span>I'm not sure</span>
                     </label>
                 </li>
             </ul>
@@ -581,56 +581,134 @@
             </div>
         </div>
 
-        <!-- STEP 9: Job Challenges (Multi-select) -->
+        <!-- STEP 9: Work Schedule -->
         <div class="question-card" data-step="9" style="display:none;">
+            <div class="question-text">What is your work schedule like?</div>
+            <ul class="options">
+                <li>
+                    <label>
+                        <input type="radio" name="q9" value="9-to-5">
+                        <span class="option-icon">🕘</span>
+                        <span>9 to 5</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q9" value="night-shifts">
+                        <span class="option-icon">🌙</span>
+                        <span>Night shifts</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q9" value="flexible">
+                        <span class="option-icon">🔄</span>
+                        <span>My hours are flexible</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q9" value="retired">
+                        <span class="option-icon">🏖️</span>
+                        <span>I'm retired</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q9" value="not-working">
+                        <span class="option-icon">⏸️</span>
+                        <span>I'm currently not working</span>
+                    </label>
+                </li>
+            </ul>
+            <div class="btn-container">
+                <button class="btn btn-back" onclick="prevStep()">← Back</button>
+                <button class="btn btn-primary" onclick="nextStep()" disabled id="btn9">Continue →</button>
+            </div>
+        </div>
+
+        <!-- STEP 10: Flexibility Desire -->
+        <div class="question-card" data-step="10" style="display:none;">
+            <div class="question-text">Do you wish you had more control over your work hours and location?</div>
+            <ul class="options">
+                <li>
+                    <label>
+                        <input type="radio" name="q10" value="yes-flexibility">
+                        <span class="option-icon">✅</span>
+                        <span>Yes, I want more flexibility</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q10" value="no-comfortable">
+                        <span class="option-icon">❌</span>
+                        <span>No, I'm comfortable as is</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q10" value="not-sure">
+                        <span class="option-icon">🤔</span>
+                        <span>I'm not sure</span>
+                    </label>
+                </li>
+            </ul>
+            <div class="btn-container">
+                <button class="btn btn-back" onclick="prevStep()">← Back</button>
+                <button class="btn btn-primary" onclick="nextStep()" disabled id="btn10">Continue →</button>
+            </div>
+        </div>
+
+        <!-- STEP 11: Job Challenges (Multi-select) -->
+        <div class="question-card" data-step="11" style="display:none;">
             <div class="question-text">What are the challenges with your current job?</div>
             <div class="question-subtext">Choose all that apply</div>
             <ul class="options">
                 <li>
                     <label>
-                        <input type="checkbox" name="q9" value="repetitive-draining">
+                        <input type="checkbox" name="q11" value="repetitive-draining">
                         <span class="option-icon">😓</span>
                         <span>It feels repetitive and draining</span>
                     </label>
                 </li>
                 <li>
                     <label>
-                        <input type="checkbox" name="q9" value="underpaid">
+                        <input type="checkbox" name="q11" value="underpaid">
                         <span class="option-icon">💸</span>
                         <span>I feel underpaid for my effort</span>
                     </label>
                 </li>
                 <li>
                     <label>
-                        <input type="checkbox" name="q9" value="not-learning">
+                        <input type="checkbox" name="q11" value="not-learning">
                         <span class="option-icon">📚</span>
                         <span>I'm not learning new skills</span>
                     </label>
                 </li>
                 <li>
                     <label>
-                        <input type="checkbox" name="q9" value="not-fulfilled">
+                        <input type="checkbox" name="q11" value="not-fulfilled">
                         <span class="option-icon">😞</span>
                         <span>I don't feel fulfilled by what I do</span>
                     </label>
                 </li>
                 <li>
                     <label>
-                        <input type="checkbox" name="q9" value="job-insecurity">
+                        <input type="checkbox" name="q11" value="job-insecurity">
                         <span class="option-icon">⚠️</span>
                         <span>I worry my job isn't secure</span>
                     </label>
                 </li>
                 <li>
                     <label>
-                        <input type="checkbox" name="q9" value="no-future">
+                        <input type="checkbox" name="q11" value="no-future">
                         <span class="option-icon">🔮</span>
                         <span>I don't see a future in my career</span>
                     </label>
                 </li>
                 <li>
                     <label>
-                        <input type="checkbox" name="q9" value="other">
+                        <input type="checkbox" name="q11" value="other">
                         <span class="option-icon">📦</span>
                         <span>Other</span>
                     </label>
@@ -638,7 +716,7 @@
             </ul>
             <div class="btn-container">
                 <button class="btn btn-back" onclick="prevStep()">← Back</button>
-                <button class="btn btn-primary" onclick="submitQuiz()" id="btn9">Get Diagnosis →</button>
+                <button class="btn btn-primary" onclick="submitQuiz()" id="btn11">Get Diagnosis →</button>
             </div>
         </div>
 
@@ -753,20 +831,21 @@
 
         // Quiz data storage
         let quizData = {
-            q1: '',
-            q2: '',
-            q3: '',
-            q4: '',
-            q5: '',
-            q6: [],
-            q7: '',
-            q8: '',
-            q9: [],
+            q1: '',           // Gender (single-select)
+            q2: '',           // Age (single-select)
+            q3: '',           // Goal (single-select)
+            q4: '',           // Budget (single-select)
+            q5: '',           // Timeline (single-select)
+            q6: '',           // Experience (single-select)
+            q7: [],           // Income Sources (multi-select)
+            q8: '',           // Work Schedule (single-select)
+            q9: '',           // Flexibility (single-select)
+            q10: [],          // Challenges (multi-select)
             profile: ''
         };
 
         let currentStep = 1;
-        const totalSteps = 9;
+        const totalSteps = 11;
 
         // Option selection handling (single-select)
         document.querySelectorAll('input[type="radio"]').forEach(input => {
