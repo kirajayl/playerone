@@ -1,6 +1,5 @@
 <!-- ============================================
      PLAYERONE QUIZ V2 — BETTERME-STYLE FLOW
-     Copy this entire block into VS Code
 ============================================= -->
 
 <!DOCTYPE html>
@@ -65,6 +64,25 @@
             border-radius: 12px;
             padding: 30px;
             margin-bottom: 20px;
+            transition: opacity 0.4s ease, filter 0.4s ease, transform 0.4s ease;
+        }
+        .question-card.fade-out {
+            opacity: 0;
+            filter: blur(10px);
+            transform: scale(0.98);
+        }
+        .question-card.fade-in {
+            opacity: 0;
+            filter: blur(10px);
+            transform: scale(0.98);
+            animation: fadeInBlur 0.4s ease forwards;
+        }
+        @keyframes fadeInBlur {
+            to {
+                opacity: 1;
+                filter: blur(0);
+                transform: scale(1);
+            }
         }
         .question-text {
             font-size: 1.4rem;
@@ -394,8 +412,47 @@
             </div>
         </div>
 
-        <!-- STEP 4: Summary Slide -->
-        <div class="question-card summary-card" data-step="4" style="display:none;">
+        <!-- STEP 4: Budget (KEY QUALIFIER) -->
+        <div class="question-card" data-step="4" style="display:none;">
+            <div class="question-text">What's your initial capital willing to invest?</div>
+            <ul class="options">
+                <li>
+                    <label>
+                        <input type="radio" name="q4" value="100">
+                        <span class="option-icon">🪙</span>
+                        <span>$100 or less (I'm testing, minimal risk)</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q4" value="1000">
+                        <span class="option-icon">💵</span>
+                        <span>$1,000 or less (I'm serious but budget-conscious)</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q4" value="5000">
+                        <span class="option-icon">💰</span>
+                        <span>$5,000 (I'm all-in, ready to scale)</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q4" value="10000+">
+                        <span class="option-icon">💎</span>
+                        <span>$10,000+ (I'm empire-building, no limits)</span>
+                    </label>
+                </li>
+            </ul>
+            <div class="btn-container">
+                <button class="btn btn-back" onclick="prevStep()">← Back</button>
+                <button class="btn btn-primary" onclick="nextStep()" disabled id="btn4">Continue →</button>
+            </div>
+        </div>
+
+        <!-- STEP 5: Summary Slide -->
+        <div class="question-card summary-card" data-step="5" style="display:none;">
             <div class="summary-title">Earn more while working less</div>
             <div class="summary-text">
                 <p style="margin-bottom: 20px;">In 28 days, you'll learn practical AI tools to grow your income without stress.</p>
@@ -406,83 +463,37 @@
             </div>
         </div>
 
-        <!-- STEP 5: Income Sources (Multi-select) -->
-        <div class="question-card" data-step="5" style="display:none;">
+        <!-- STEP 6: Income Sources (Multi-select) -->
+        <div class="question-card" data-step="6" style="display:none;">
             <div class="question-text">What are your current income sources?</div>
             <div class="question-subtext">Choose all that apply</div>
             <ul class="options">
                 <li>
                     <label>
-                        <input type="checkbox" name="q5" value="full-time-job">
+                        <input type="checkbox" name="q6" value="full-time-job">
                         <span class="option-icon">🏢</span>
                         <span>Full-time job</span>
                     </label>
                 </li>
                 <li>
                     <label>
-                        <input type="checkbox" name="q5" value="own-business">
+                        <input type="checkbox" name="q6" value="own-business">
                         <span class="option-icon">🏪</span>
                         <span>My own business</span>
                     </label>
                 </li>
                 <li>
                     <label>
-                        <input type="checkbox" name="q5" value="freelance-passive">
+                        <input type="checkbox" name="q6" value="freelance-passive">
                         <span class="option-icon">💻</span>
                         <span>Freelance or passive income</span>
                     </label>
                 </li>
                 <li>
                     <label>
-                        <input type="checkbox" name="q5" value="other">
+                        <input type="checkbox" name="q6" value="other">
                         <span class="option-icon">📦</span>
                         <span>Other</span>
-                    </label>
-                </li>
-            </ul>
-            <div class="btn-container">
-                <button class="btn btn-back" onclick="prevStep()">← Back</button>
-                <button class="btn btn-primary" onclick="nextStep()" disabled id="btn5">Continue →</button>
-            </div>
-        </div>
-
-        <!-- STEP 6: Work Schedule -->
-        <div class="question-card" data-step="6" style="display:none;">
-            <div class="question-text">What is your work schedule like?</div>
-            <ul class="options">
-                <li>
-                    <label>
-                        <input type="radio" name="q6" value="9-to-5">
-                        <span class="option-icon">🕘</span>
-                        <span>9 to 5</span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input type="radio" name="q6" value="night-shifts">
-                        <span class="option-icon">🌙</span>
-                        <span>Night shifts</span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input type="radio" name="q6" value="flexible">
-                        <span class="option-icon">🔄</span>
-                        <span>My hours are flexible</span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input type="radio" name="q6" value="retired">
-                        <span class="option-icon">🏖️</span>
-                        <span>I'm retired</span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input type="radio" name="q6" value="not-working">
-                        <span class="option-icon">⏸️</span>
-                        <span>I'm currently not working</span>
                     </label>
                 </li>
             </ul>
@@ -492,29 +503,43 @@
             </div>
         </div>
 
-        <!-- STEP 7: Flexibility Desire -->
+        <!-- STEP 7: Work Schedule -->
         <div class="question-card" data-step="7" style="display:none;">
-            <div class="question-text">Do you wish you had more control over your work hours and location?</div>
+            <div class="question-text">What is your work schedule like?</div>
             <ul class="options">
                 <li>
                     <label>
-                        <input type="radio" name="q7" value="yes-flexibility">
-                        <span class="option-icon">✅</span>
-                        <span>Yes, I want more flexibility</span>
+                        <input type="radio" name="q7" value="9-to-5">
+                        <span class="option-icon">🕘</span>
+                        <span>9 to 5</span>
                     </label>
                 </li>
                 <li>
                     <label>
-                        <input type="radio" name="q7" value="no-comfortable">
-                        <span class="option-icon">❌</span>
-                        <span>No, I'm comfortable as is</span>
+                        <input type="radio" name="q7" value="night-shifts">
+                        <span class="option-icon">🌙</span>
+                        <span>Night shifts</span>
                     </label>
                 </li>
                 <li>
                     <label>
-                        <input type="radio" name="q7" value="not-sure">
-                        <span class="option-icon">🤔</span>
-                        <span>I'm not sure</span>
+                        <input type="radio" name="q7" value="flexible">
+                        <span class="option-icon">🔄</span>
+                        <span>My hours are flexible</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q7" value="retired">
+                        <span class="option-icon">🏖️</span>
+                        <span>I'm retired</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q7" value="not-working">
+                        <span class="option-icon">⏸️</span>
+                        <span>I'm currently not working</span>
                     </label>
                 </li>
             </ul>
@@ -524,56 +549,88 @@
             </div>
         </div>
 
-        <!-- STEP 8: Job Challenges (Multi-select) -->
+        <!-- STEP 8: Flexibility Desire -->
         <div class="question-card" data-step="8" style="display:none;">
+            <div class="question-text">Do you wish you had more control over your work hours and location?</div>
+            <ul class="options">
+                <li>
+                    <label>
+                        <input type="radio" name="q8" value="yes-flexibility">
+                        <span class="option-icon">✅</span>
+                        <span>Yes, I want more flexibility</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q8" value="no-comfortable">
+                        <span class="option-icon">❌</span>
+                        <span>No, I'm comfortable as is</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q8" value="not-sure">
+                        <span class="option-icon">🤔</span>
+                        <span>I'm not sure</span>
+                    </label>
+                </li>
+            </ul>
+            <div class="btn-container">
+                <button class="btn btn-back" onclick="prevStep()">← Back</button>
+                <button class="btn btn-primary" onclick="nextStep()" disabled id="btn8">Continue →</button>
+            </div>
+        </div>
+
+        <!-- STEP 9: Job Challenges (Multi-select) -->
+        <div class="question-card" data-step="9" style="display:none;">
             <div class="question-text">What are the challenges with your current job?</div>
             <div class="question-subtext">Choose all that apply</div>
             <ul class="options">
                 <li>
                     <label>
-                        <input type="checkbox" name="q8" value="repetitive-draining">
+                        <input type="checkbox" name="q9" value="repetitive-draining">
                         <span class="option-icon">😓</span>
                         <span>It feels repetitive and draining</span>
                     </label>
                 </li>
                 <li>
                     <label>
-                        <input type="checkbox" name="q8" value="underpaid">
+                        <input type="checkbox" name="q9" value="underpaid">
                         <span class="option-icon">💸</span>
                         <span>I feel underpaid for my effort</span>
                     </label>
                 </li>
                 <li>
                     <label>
-                        <input type="checkbox" name="q8" value="not-learning">
+                        <input type="checkbox" name="q9" value="not-learning">
                         <span class="option-icon">📚</span>
                         <span>I'm not learning new skills</span>
                     </label>
                 </li>
                 <li>
                     <label>
-                        <input type="checkbox" name="q8" value="not-fulfilled">
+                        <input type="checkbox" name="q9" value="not-fulfilled">
                         <span class="option-icon">😞</span>
                         <span>I don't feel fulfilled by what I do</span>
                     </label>
                 </li>
                 <li>
                     <label>
-                        <input type="checkbox" name="q8" value="job-insecurity">
+                        <input type="checkbox" name="q9" value="job-insecurity">
                         <span class="option-icon">⚠️</span>
                         <span>I worry my job isn't secure</span>
                     </label>
                 </li>
                 <li>
                     <label>
-                        <input type="checkbox" name="q8" value="no-future">
+                        <input type="checkbox" name="q9" value="no-future">
                         <span class="option-icon">🔮</span>
                         <span>I don't see a future in my career</span>
                     </label>
                 </li>
                 <li>
                     <label>
-                        <input type="checkbox" name="q8" value="other">
+                        <input type="checkbox" name="q9" value="other">
                         <span class="option-icon">📦</span>
                         <span>Other</span>
                     </label>
@@ -581,7 +638,7 @@
             </ul>
             <div class="btn-container">
                 <button class="btn btn-back" onclick="prevStep()">← Back</button>
-                <button class="btn btn-primary" onclick="submitQuiz()" id="btn8">Get Diagnosis →</button>
+                <button class="btn btn-primary" onclick="submitQuiz()" id="btn9">Get Diagnosis →</button>
             </div>
         </div>
 
@@ -606,7 +663,7 @@
                 <strong style="color: #666666;">RECOMMENDED: PIONEER</strong>
                 <div class="result-price">$9.90</div>
             </div>
-            <a href="https://nas.io/theonepercentbetterprogram/digital-files/the-1-better-program" class="result-cta">Start Your Game — $9.90</a>
+            <a href="https://bit.ly/The1PercentBlueprint" class="result-cta">Start Your Game — $9.90</a>
         </div>
 
         <!-- Result: Builder -->
@@ -628,7 +685,7 @@
                 <strong style="color: #666666;">RECOMMENDED: CREATOR</strong>
                 <div class="result-price">$999</div>
             </div>
-            <a href="http://tiny.cc/creatorsbizguide" class="result-cta">Start Your Game — $999</a>
+            <a href="https://bit.ly/1PercentMasterSystemDFY" class="result-cta">Start Your Game — $999</a>
             <p style="color: #999999; font-size: 0.9rem; margin-top: 15px;">53 Empire spots remaining.</p>
         </div>
 
@@ -653,7 +710,7 @@
                 <strong style="color: #666666;">RECOMMENDED: EMPIRE</strong>
                 <div class="result-price">$4,999</div>
             </div>
-            <a href="http://tiny.cc/creatorsempireguide" class="result-cta">Start Your Game — $4,999</a>
+            <a href="https://bit.ly/1Percent-BuildAnEmpire" class="result-cta">Start Your Game — $4,999</a>
         </div>
 
         <!-- Result: Empire Builder -->
@@ -679,15 +736,14 @@
                 <strong style="color: #666666;">RECOMMENDED: EMPIRE + VIP</strong>
                 <div class="result-price">$4,999</div>
             </div>
-            <a href="http://tiny.cc/creatorsempireguide" class="result-cta">Start Your Game — $4,999 + VIP</a>
+            <a href="https://bit.ly/1Percent-BuildAnEmpire" class="result-cta">Start Your Game — $4,999 + VIP</a>
             <p style="color: #999999; font-size: 0.9rem; margin-top: 15px;">Then reply to confirmation email with subject "VIP" for Gary's 1-on-1 call.</p>
         </div>
 
         <!-- Footer -->
-        <div class="footer">
-            <a href="/quiz/privacy-policy">Privacy</a>
-            <span>|</span>
-            <a href="/quiz/terms">Terms</a>
+        <div class="footer" style="text-align: center; color: #999999; font-size: 0.85rem; line-height: 1.6;">
+            <p style="margin-bottom: 8px;">🔒 Your answers are 100% private and will never be shared.</p>
+            <p>We use your responses to recommend the best path for YOUR journey — honesty helps us support you better.</p>
         </div>
     </div>
 
@@ -701,15 +757,16 @@
             q2: '',
             q3: '',
             q4: '',
-            q5: [],
-            q6: '',
+            q5: '',
+            q6: [],
             q7: '',
-            q8: [],
+            q8: '',
+            q9: [],
             profile: ''
         };
 
         let currentStep = 1;
-        const totalSteps = 8;
+        const totalSteps = 9;
 
         // Option selection handling (single-select)
         document.querySelectorAll('input[type="radio"]').forEach(input => {
@@ -738,19 +795,45 @@
 
         // Navigation
         function nextStep() {
-            document.querySelector(`.question-card[data-step="${currentStep}"]`).style.display = 'none';
-            currentStep++;
-            document.querySelector(`.question-card[data-step="${currentStep}"]`).style.display = 'block';
-            updateProgress();
-            updateNavButtons();
+            const currentCard = document.querySelector(`.question-card[data-step="${currentStep}"]`);
+            currentCard.classList.add('fade-out');
+            
+            setTimeout(() => {
+                currentCard.style.display = 'none';
+                currentCard.classList.remove('fade-out');
+                currentStep++;
+                const nextCard = document.querySelector(`.question-card[data-step="${currentStep}"]`);
+                nextCard.style.display = 'block';
+                nextCard.classList.add('fade-in');
+                
+                setTimeout(() => {
+                    nextCard.classList.remove('fade-in');
+                }, 400);
+                
+                updateProgress();
+                updateNavButtons();
+            }, 400);
         }
 
         function prevStep() {
-            document.querySelector(`.question-card[data-step="${currentStep}"]`).style.display = 'none';
-            currentStep--;
-            document.querySelector(`.question-card[data-step="${currentStep}"]`).style.display = 'block';
-            updateProgress();
-            updateNavButtons();
+            const currentCard = document.querySelector(`.question-card[data-step="${currentStep}"]`);
+            currentCard.classList.add('fade-out');
+            
+            setTimeout(() => {
+                currentCard.style.display = 'none';
+                currentCard.classList.remove('fade-out');
+                currentStep--;
+                const prevCard = document.querySelector(`.question-card[data-step="${currentStep}"]`);
+                prevCard.style.display = 'block';
+                prevCard.classList.add('fade-in');
+                
+                setTimeout(() => {
+                    prevCard.classList.remove('fade-in');
+                }, 400);
+                
+                updateProgress();
+                updateNavButtons();
+            }, 400);
         }
 
         function updateProgress() {
@@ -765,16 +848,19 @@
 
         // Submit quiz
         function submitQuiz() {
-            // Determine profile based on Q5 (income sources) as proxy for budget
-            const incomeSources = quizData.q5;
-            if (incomeSources.includes('full-time-job') && !incomeSources.includes('own-business')) {
+            // Determine profile based on Q4 (BUDGET - KEY QUALIFIER)
+            const budget = quizData.q4;
+            
+            if (budget === '100') {
                 quizData.profile = 'starter';
-            } else if (incomeSources.includes('own-business') || incomeSources.includes('freelance-passive')) {
+            } else if (budget === '1000') {
                 quizData.profile = 'builder';
-            } else if (incomeSources.length >= 2) {
+            } else if (budget === '5000') {
                 quizData.profile = 'scaler';
-            } else {
+            } else if (budget === '10000+') {
                 quizData.profile = 'empire';
+            } else {
+                quizData.profile = 'starter';
             }
 
             // Show loading
@@ -800,465 +886,6 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(quizData)
             }).catch(error => console.error('Error:', error));
-        }
-    </script>
-</body>
-</html>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .quiz-container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            max-width: 600px;
-            width: 100%;
-            padding: 40px;
-        }
-
-        .quiz-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .quiz-header h1 {
-            color: #1a1a1a;
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
-
-        .quiz-header p {
-            color: #666;
-            font-size: 16px;
-        }
-
-        .progress-bar {
-            background: #f0f0f0;
-            border-radius: 10px;
-            height: 8px;
-            margin-bottom: 30px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            height: 100%;
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
-        .question {
-            display: none;
-        }
-
-        .question.active {
-            display: block;
-        }
-
-        .question h2 {
-            color: #1a1a1a;
-            font-size: 22px;
-            margin-bottom: 25px;
-            line-height: 1.4;
-        }
-
-        .options {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .option {
-            padding: 16px 20px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 16px;
-            color: #333;
-        }
-
-        .option:hover {
-            border-color: #667eea;
-            background: #f8f9ff;
-            transform: translateX(5px);
-        }
-
-        .option.selected {
-            border-color: #667eea;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-            gap: 15px;
-        }
-
-        .btn {
-            padding: 14px 28px;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-back {
-            background: #f0f0f0;
-            color: #666;
-        }
-
-        .btn-back:hover {
-            background: #e0e0e0;
-        }
-
-        .btn-back:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-        }
-
-        .btn-next {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            flex: 1;
-        }
-
-        .btn-next:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-next:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .result {
-            display: none;
-            text-align: center;
-        }
-
-        .result.active {
-            display: block;
-        }
-
-        .result-icon {
-            font-size: 80px;
-            margin-bottom: 20px;
-        }
-
-        .result h2 {
-            color: #1a1a1a;
-            font-size: 28px;
-            margin-bottom: 15px;
-        }
-
-        .result p {
-            color: #666;
-            font-size: 16px;
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
-
-        .result-box {
-            background: linear-gradient(135deg, #f8f9ff 0%, #f0f0ff 100%);
-            border: 2px solid #667eea;
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 25px;
-        }
-
-        .result-box h3 {
-            color: #667eea;
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-
-        .result-box p {
-            color: #555;
-            font-size: 15px;
-            margin-bottom: 15px;
-        }
-
-        .btn-cta {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            width: 100%;
-            padding: 16px;
-            font-size: 18px;
-            text-decoration: none;
-            display: inline-block;
-            border-radius: 10px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .btn-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        @media (max-width: 600px) {
-            .quiz-container {
-                padding: 25px;
-            }
-
-            .quiz-header h1 {
-                font-size: 26px;
-            }
-
-            .question h2 {
-                font-size: 18px;
-            }
-
-            .option {
-                font-size: 14px;
-                padding: 14px 16px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="quiz-container">
-        <div class="quiz-header">
-            <h1>🎯 Find Your Perfect AI Plan</h1>
-            <p>Answer 5 quick questions to get your personalized recommendation</p>
-        </div>
-
-        <div class="progress-bar">
-            <div class="progress-fill" id="progress"></div>
-        </div>
-
-        <form id="quiz-form">
-            <!-- Question 1 -->
-            <div class="question active" data-question="1">
-                <h2>1. What's your primary goal with AI automation?</h2>
-                <div class="options">
-                    <div class="option" data-value="learn">I want to learn and implement AI myself</div>
-                    <div class="option" data-value="deploy">I need a ready-to-deploy system</div>
-                    <div class="option" data-value="scale">I want to build a full AI-powered business</div>
-                    <div class="option" data-value="consult">I'm looking for expert guidance and support</div>
-                </div>
-                <div class="navigation">
-                    <button type="button" class="btn btn-back" disabled>Back</button>
-                    <button type="button" class="btn btn-next" disabled>Next</button>
-                </div>
-            </div>
-
-            <!-- Question 2 -->
-            <div class="question" data-question="2">
-                <h2>2. What's your technical comfort level?</h2>
-                <div class="options">
-                    <div class="option" data-value="beginner">Beginner - I need step-by-step guidance</div>
-                    <div class="option" data-value="intermediate">Intermediate - I can follow instructions</div>
-                    <div class="option" data-value="advanced">Advanced - I'm comfortable with tech</div>
-                    <div class="option" data-value="expert">Expert - I can build from scratch</div>
-                </div>
-                <div class="navigation">
-                    <button type="button" class="btn btn-back">Back</button>
-                    <button type="button" class="btn btn-next" disabled>Next</button>
-                </div>
-            </div>
-
-            <!-- Question 3 -->
-            <div class="question" data-question="3">
-                <h2>3. What's your preferred implementation timeline?</h2>
-                <div class="options">
-                    <div class="option" data-value="immediate">ASAP - I want to start today</div>
-                    <div class="option" data-value="week">Within a week</div>
-                    <div class="option" data-value="month">Within a month</div>
-                    <div class="option" data-value="flexible">No rush - quality over speed</div>
-                </div>
-                <div class="navigation">
-                    <button type="button" class="btn btn-back">Back</button>
-                    <button type="button" class="btn btn-next" disabled>Next</button>
-                </div>
-            </div>
-
-            <!-- Question 4 -->
-            <div class="question" data-question="4">
-                <h2>4. What's your budget range?</h2>
-                <div class="options">
-                    <div class="option" data-value="budget">Under $50 - Just getting started</div>
-                    <div class="option" data-value="standard">$500-$1,500 - Ready to invest</div>
-                    <div class="option" data-value="premium">$2,000-$5,000 - Serious about results</div>
-                    <div class="option" data-value="enterprise">$5,000+ - Building an empire</div>
-                </div>
-                <div class="navigation">
-                    <button type="button" class="btn btn-back">Back</button>
-                    <button type="button" class="btn btn-next" disabled>Next</button>
-                </div>
-            </div>
-
-            <!-- Question 5 -->
-            <div class="question" data-question="5">
-                <h2>5. What support level do you need?</h2>
-                <div class="options">
-                    <div class="option" data-value="self">Self-guided - I'll figure it out</div>
-                    <div class="option" data-value="community">Community support - Access to forums</div>
-                    <div class="option" data-value="priority">Priority support - Direct help when needed</div>
-                    <div class="option" data-value="done-for-you">Done-for-you - Build it for me</div>
-                </div>
-                <div class="navigation">
-                    <button type="button" class="btn btn-back">Back</button>
-                    <button type="button" class="btn btn-next" disabled>Next</button>
-                </div>
-            </div>
-
-            <!-- Result -->
-            <div class="result" id="result">
-                <div class="result-icon">🎉</div>
-                <h2>Your Perfect Match Is Ready!</h2>
-                <p>Based on your answers, we've identified the ideal plan to accelerate your AI journey.</p>
-                
-                <div class="result-box" id="recommendation">
-                    <h3 id="plan-name">Loading your recommendation...</h3>
-                    <p id="plan-description"></p>
-                </div>
-
-                <a href="https://forms.gle/bfbonqABdYHCSnJT9" class="btn-cta" target="_blank">
-                    Get Your Personalized Plan →
-                </a>
-                
-                <p style="margin-top: 20px; font-size: 14px; color: #999;">
-                    Or <a href="index.html" style="color: #667eea; text-decoration: underline;">return to homepage</a>
-                </p>
-            </div>
-        </form>
-    </div>
-
-    <script>
-        const questions = document.querySelectorAll('.question');
-        const result = document.getElementById('result');
-        const progress = document.getElementById('progress');
-        const totalQuestions = questions.length;
-
-        let currentQuestion = 0;
-        let answers = {};
-
-        // Option selection
-        document.querySelectorAll('.option').forEach(option => {
-            option.addEventListener('click', function() {
-                const question = this.closest('.question');
-                const questionNum = question.dataset.question;
-                
-                // Remove selected from all options in this question
-                question.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
-                
-                // Add selected to clicked option
-                this.classList.add('selected');
-                
-                // Store answer
-                answers[questionNum] = this.dataset.value;
-                
-                // Enable next button
-                question.querySelector('.btn-next').disabled = false;
-            });
-        });
-
-        // Navigation
-        document.querySelectorAll('.btn-next').forEach(btn => {
-            btn.addEventListener('click', function() {
-                if (this.disabled) return;
-                
-                questions[currentQuestion].classList.remove('active');
-                currentQuestion++;
-                
-                if (currentQuestion >= totalQuestions) {
-                    showResult();
-                } else {
-                    questions[currentQuestion].classList.add('active');
-                    updateProgress();
-                    updateButtons();
-                }
-            });
-        });
-
-        document.querySelectorAll('.btn-back').forEach(btn => {
-            btn.addEventListener('click', function() {
-                if (currentQuestion === 0) return;
-                
-                questions[currentQuestion].classList.remove('active');
-                currentQuestion--;
-                questions[currentQuestion].classList.add('active');
-                updateProgress();
-                updateButtons();
-            });
-        });
-
-        function updateProgress() {
-            const percentage = ((currentQuestion) / totalQuestions) * 100;
-            progress.style.width = percentage + '%';
-        }
-
-        function updateButtons() {
-            const currentQ = questions[currentQuestion];
-            const backBtn = currentQ.querySelector('.btn-back');
-            const nextBtn = currentQ.querySelector('.btn-next');
-            
-            backBtn.disabled = currentQuestion === 0;
-            
-            // Check if option is selected
-            const selectedOption = currentQ.querySelector('.option.selected');
-            nextBtn.disabled = !selectedOption;
-        }
-
-        function showResult() {
-            progress.style.width = '100%';
-            
-            // Calculate recommendation based on answers
-            const recommendation = calculateRecommendation();
-            
-            document.getElementById('plan-name').textContent = recommendation.name;
-            document.getElementById('plan-description').textContent = recommendation.description;
-            
-            questions.forEach(q => q.style.display = 'none');
-            result.classList.add('active');
-        }
-
-        function calculateRecommendation() {
-            // Simple logic based on budget answer
-            const budget = answers['4'];
-            
-            const recommendations = {
-                'budget': {
-                    name: '🎯 The Blueprint - $9.90',
-                    description: 'Perfect for getting started! Get instant access to our AI Super Prompt and deploy your first income stream within 72 hours. No subscriptions, no hidden fees.'
-                },
-                'standard': {
-                    name: '⚡ The DFY System - $999',
-                    description: 'Ready to accelerate? We\'ll build your complete AI automation system for you. Done-for-you setup with priority support. Zero headaches.'
-                },
-                'premium': {
-                    name: '🚀 The Accelerator + Bonus - Custom',
-                    description: 'You\'re serious about results. Get our full DFY system plus exclusive bonuses and extended support to maximize your ROI.'
-                },
-                'enterprise': {
-                    name: '👑 The Full Empire - $4,999',
-                    description: 'Build your AI-powered empire! Complete turnkey system with commission structure, Founders Circle eligibility, and everything you need to scale.'
-                }
-            };
-
-            return recommendations[budget] || recommendations['standard'];
         }
     </script>
 </body>
