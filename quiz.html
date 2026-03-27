@@ -548,28 +548,28 @@
             <ul class="options">
                 <li>
                     <label>
-                        <input type="checkbox" name="q8" value="full-time-job">
+                        <input type="checkbox" name="q7" value="full-time-job">
                         <span class="option-icon">🏢</span>
                         <span>Full-time job</span>
                     </label>
                 </li>
                 <li>
                     <label>
-                        <input type="checkbox" name="q8" value="own-business">
+                        <input type="checkbox" name="q7" value="own-business">
                         <span class="option-icon">🏪</span>
                         <span>My own business</span>
                     </label>
                 </li>
                 <li>
                     <label>
-                        <input type="checkbox" name="q8" value="freelance-passive">
+                        <input type="checkbox" name="q7" value="freelance-passive">
                         <span class="option-icon">💻</span>
                         <span>Freelance or passive income</span>
                     </label>
                 </li>
                 <li>
                     <label>
-                        <input type="checkbox" name="q8" value="other">
+                        <input type="checkbox" name="q7" value="other">
                         <span class="option-icon">📦</span>
                         <span>Other</span>
                     </label>
@@ -666,49 +666,49 @@
             <ul class="options">
                 <li>
                     <label>
-                        <input type="checkbox" name="q11" value="repetitive-draining">
+                        <input type="checkbox" name="q10" value="repetitive-draining">
                         <span class="option-icon">😓</span>
                         <span>It feels repetitive and draining</span>
                     </label>
                 </li>
                 <li>
                     <label>
-                        <input type="checkbox" name="q11" value="underpaid">
+                        <input type="checkbox" name="q10" value="underpaid">
                         <span class="option-icon">💸</span>
                         <span>I feel underpaid for my effort</span>
                     </label>
                 </li>
                 <li>
                     <label>
-                        <input type="checkbox" name="q11" value="not-learning">
+                        <input type="checkbox" name="q10" value="not-learning">
                         <span class="option-icon">📚</span>
                         <span>I'm not learning new skills</span>
                     </label>
                 </li>
                 <li>
                     <label>
-                        <input type="checkbox" name="q11" value="not-fulfilled">
+                        <input type="checkbox" name="q10" value="not-fulfilled">
                         <span class="option-icon">😞</span>
                         <span>I don't feel fulfilled by what I do</span>
                     </label>
                 </li>
                 <li>
                     <label>
-                        <input type="checkbox" name="q11" value="job-insecurity">
+                        <input type="checkbox" name="q10" value="job-insecurity">
                         <span class="option-icon">⚠️</span>
                         <span>I worry my job isn't secure</span>
                     </label>
                 </li>
                 <li>
                     <label>
-                        <input type="checkbox" name="q11" value="no-future">
+                        <input type="checkbox" name="q10" value="no-future">
                         <span class="option-icon">🔮</span>
                         <span>I don't see a future in my career</span>
                     </label>
                 </li>
                 <li>
                     <label>
-                        <input type="checkbox" name="q11" value="other">
+                        <input type="checkbox" name="q10" value="other">
                         <span class="option-icon">📦</span>
                         <span>Other</span>
                     </label>
@@ -959,22 +959,30 @@
 
         // Submit to Google Sheets
         function submitToGoogleSheets() {
-            console.log('Submitting to Google Sheets:', quizData);
+            // Create a clean copy of quizData with proper string conversion
+            const payload = {
+                q1: quizData.q1 || '',
+                q2: quizData.q2 || '',
+                q3: quizData.q3 || '',
+                q4: quizData.q4 || '',
+                q5: quizData.q5 || '',
+                q6: quizData.q6 || '',
+                q7: Array.isArray(quizData.q7) ? quizData.q7.join(', ') : (quizData.q7 || ''),
+                q8: quizData.q8 || '',
+                q9: quizData.q9 || '',
+                q10: Array.isArray(quizData.q10) ? quizData.q10.join(', ') : (quizData.q10 || ''),
+                profile: quizData.profile || ''
+            };
             
-            // Convert arrays to comma-separated strings before sending
-            const dataToSend = { ...quizData };
-            if (Array.isArray(dataToSend.q7)) {
-                dataToSend.q7 = dataToSend.q7.join(', ');
-            }
-            if (Array.isArray(dataToSend.q10)) {
-                dataToSend.q10 = dataToSend.q10.join(', ');
-            }
+            console.log('Submitting to Google Sheets:', payload);
             
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
                 mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(dataToSend)
+                headers: { 
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload)
             })
             .then(response => {
                 console.log('Response status:', response.status);
