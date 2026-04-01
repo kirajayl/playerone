@@ -40,7 +40,24 @@
             opacity: 0.5;
         }
         .nav-btn.active { opacity: 1; }
-        .nav-title { font-weight: 600; font-size: 1.1rem; }
+        .nav-title { 
+            font-weight: 600; 
+            font-size: 1.1rem;
+            text-align: center;
+            flex: 1;
+        }
+        .nav-title.main-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #333333;
+        }
+        .nav-subtitle {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: #666666;
+            margin-top: 4px;
+        }
 
         /* === PROGRESS BAR === */
         .progress-container {
@@ -273,6 +290,11 @@
             margin: 0 auto 20px;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-subtext {
+            color: #999999;
+            font-size: 0.95rem;
+            margin-top: 10px;
+        }
 
         /* === RESPONSIVE === */
         @media (max-width: 600px) {
@@ -287,7 +309,10 @@
         <!-- Top Navigation -->
         <div class="top-nav">
             <button class="nav-btn" id="backBtn" onclick="prevStep()" style="display:none;">←</button>
-            <div class="nav-title">My Profile</div>
+            <div class="nav-title main-title">
+                Earn more while working less
+                <span class="nav-subtitle">Discover Your AI-Powered Business Tier</span>
+            </div>
             <button class="nav-btn" id="forwardBtn" onclick="nextStep()" style="visibility:hidden;">→</button>
         </div>
 
@@ -299,8 +324,8 @@
         <!-- Loading Screen -->
         <div class="loading" id="loadingScreen">
             <div class="loading-spinner"></div>
-            <p style="color: #666666; font-size: 1.1rem;">Analyzing your answers...</p>
-            <p style="color: #999999; font-size: 0.95rem; margin-top: 10px;">Matching you to your AI Clone profile...</p>
+            <p style="color: #666666; font-size: 1.1rem;" id="loadingMainText">Calculating your personalized tier...</p>
+            <p class="loading-subtext" id="loadingSubText">This takes just a moment...</p>
         </div>
 
         <!-- STEP 1: Gender -->
@@ -531,7 +556,7 @@
 
         <!-- STEP 7: Summary Slide -->
         <div class="question-card summary-card" data-step="7" style="display:none;">
-            <div class="summary-title">Earn more while working less</div>
+            <div class="summary-title">You're ready to begin</div>
             <div class="summary-text">
                 <p style="margin-bottom: 20px;">In 28 days, you'll learn practical AI tools to grow your income without stress.</p>
                 <p><strong>156 AI Agent Skills.</strong> Build your AI Clone. Deploy your empire.</p>
@@ -946,7 +971,28 @@
             document.querySelector(`.question-card[data-step="${currentStep}"]`).style.display = 'none';
             document.getElementById('loadingScreen').classList.add('active');
             document.getElementById('progressFill').style.width = '100%';
+            
+            // Rotating loading messages
+            const mainMessages = [
+                'Calculating your personalized tier...',
+                'Analyzing your responses...',
+                'Building your AI Clone profile...'
+            ];
+            const subMessages = [
+                'This takes just a moment...',
+                'Processing your answers...',
+                'Almost there...'
+            ];
+            
+            let messageIndex = 0;
+            const rotateInterval = setInterval(() => {
+                messageIndex = (messageIndex + 1) % mainMessages.length;
+                document.getElementById('loadingMainText').textContent = mainMessages[messageIndex];
+                document.getElementById('loadingSubText').textContent = subMessages[messageIndex];
+            }, 1000);
+            
             setTimeout(() => {
+                clearInterval(rotateInterval);
                 document.getElementById('loadingScreen').classList.remove('active');
                 document.getElementById(`result-${quizData.profile}`).style.display = 'block';
                 document.querySelector('.top-nav').style.display = 'none';
@@ -954,7 +1000,7 @@
                 document.querySelector('.footer').style.display = 'none';
                 
                 submitToGoogleSheets();
-            }, 2000);
+            }, 3000);
         }
 
         // Submit to Google Sheets
