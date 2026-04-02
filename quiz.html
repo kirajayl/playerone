@@ -310,13 +310,30 @@
         <div class="top-nav">
             <button class="nav-btn" id="backBtn" onclick="prevStep()" style="display:none;">←</button>
             <div class="nav-title main-title">
-                Create an AI Clone That Works For You
+                Discover Your AI Business Tier
                 <span class="nav-subtitle">Take this AI Quiz to Get Started</span>
             </div>
             <button class="nav-btn" id="forwardBtn" onclick="nextStep()" style="visibility:hidden;">→</button>
         </div>
 
-        <!-- Progress Bar -->
+        <!-- Social Proof -->
+        <div style="text-align: center; color: #666666; font-size: 0.9rem; margin-bottom: 15px;">
+            <strong>207 members</strong> have discovered their AI path. <strong>25 countries</strong>. <strong>Zero ads</strong>.
+        </div>
+
+        <!-- Value Props -->
+        <div style="background: #f0f7ff; border-left: 4px solid #4a90d9; padding: 15px 20px; margin-bottom: 20px; border-radius: 8px;">
+            <div style="color: #333333; font-size: 0.95rem; line-height: 1.8;">
+                ✓ Discover your AI readiness score<br>
+                ✓ Get your personalized 7-day action plan<br>
+                ✓ See which AI tools match your goals
+            </div>
+        </div>
+
+        <!-- Progress Bar with Question Counter -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <div style="font-size: 0.9rem; color: #666666;" id="questionCounter">Question 1 of 7</div>
+        </div>
         <div class="progress-container">
             <div class="progress-fill" id="progressFill"></div>
         </div>
@@ -328,22 +345,36 @@
             <p class="loading-subtext" id="loadingSubText">This takes just a moment...</p>
         </div>
 
-        <!-- STEP 1: Gender -->
+        <!-- STEP 1: Biggest Challenge (NEW Q1) -->
         <div class="question-card" data-step="1">
-            <div class="question-text">What's your gender?</div>
+            <div class="question-text">What's your biggest challenge right now?</div>
             <ul class="options">
                 <li>
                     <label>
-                        <input type="radio" name="q1" value="male">
-                        <span class="option-icon">👨</span>
-                        <span>Male</span>
+                        <input type="radio" name="q1" value="not-enough-time">
+                        <span class="option-icon">⏰</span>
+                        <span>Not enough time</span>
                     </label>
                 </li>
                 <li>
                     <label>
-                        <input type="radio" name="q1" value="female">
-                        <span class="option-icon">👩</span>
-                        <span>Female</span>
+                        <input type="radio" name="q1" value="dont-know-where-to-start">
+                        <span class="option-icon">🗺️</span>
+                        <span>Don't know where to start</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q1" value="tech-overwhelming">
+                        <span class="option-icon">💻</span>
+                        <span>Tech feels overwhelming</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="q1" value="need-more-income">
+                        <span class="option-icon">💰</span>
+                        <span>Need more income</span>
                     </label>
                 </li>
             </ul>
@@ -554,20 +585,8 @@
             </div>
         </div>
 
-        <!-- STEP 7: Summary Slide -->
-        <div class="question-card summary-card" data-step="7" style="display:none;">
-            <div class="summary-title">You're ready to begin</div>
-            <div class="summary-text">
-                <p style="margin-bottom: 20px;">In 28 days, you'll learn practical AI tools to grow your income without stress.</p>
-                <p><strong>156 AI Agent Skills.</strong> Build your AI Clone. Deploy your empire.</p>
-            </div>
-            <div class="btn-container" style="justify-content: center; margin-top: 30px;">
-                <button class="btn btn-primary" onclick="nextStep()">Continue →</button>
-            </div>
-        </div>
-
-        <!-- STEP 8: Income Sources (Multi-select) -->
-        <div class="question-card" data-step="8" style="display:none;">
+        <!-- STEP 7: Income Sources (Multi-select) - FINAL QUESTION -->
+        <div class="question-card" data-step="7" style="display:none;">
             <div class="question-text">What are your current income sources?</div>
             <div class="question-subtext">Choose all that apply</div>
             <ul class="options">
@@ -602,146 +621,7 @@
             </ul>
             <div class="btn-container">
                 <button class="btn btn-back" onclick="prevStep()">← Back</button>
-                <button class="btn btn-primary" onclick="nextStep()" disabled id="btn8">Continue →</button>
-            </div>
-        </div>
-
-        <!-- STEP 9: Work Schedule -->
-        <div class="question-card" data-step="9" style="display:none;">
-            <div class="question-text">What is your work schedule like?</div>
-            <ul class="options">
-                <li>
-                    <label>
-                        <input type="radio" name="q8" value="9-to-5">
-                        <span class="option-icon">🕘</span>
-                        <span>9 to 5</span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input type="radio" name="q8" value="night-shifts">
-                        <span class="option-icon">🌙</span>
-                        <span>Night shifts</span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input type="radio" name="q8" value="flexible">
-                        <span class="option-icon">🔄</span>
-                        <span>My hours are flexible</span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input type="radio" name="q8" value="retired">
-                        <span class="option-icon">🏖️</span>
-                        <span>I'm retired</span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input type="radio" name="q8" value="not-working">
-                        <span class="option-icon">⏸️</span>
-                        <span>I'm currently not working</span>
-                    </label>
-                </li>
-            </ul>
-            <div class="btn-container">
-                <button class="btn btn-back" onclick="prevStep()">← Back</button>
-                <button class="btn btn-primary" onclick="nextStep()" disabled id="btn9">Continue →</button>
-            </div>
-        </div>
-
-        <!-- STEP 10: Flexibility Desire -->
-        <div class="question-card" data-step="10" style="display:none;">
-            <div class="question-text">Do you wish you had more control over your work hours and location?</div>
-            <ul class="options">
-                <li>
-                    <label>
-                        <input type="radio" name="q9" value="yes-flexibility">
-                        <span class="option-icon">✅</span>
-                        <span>Yes, I want more flexibility</span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input type="radio" name="q9" value="no-comfortable">
-                        <span class="option-icon">❌</span>
-                        <span>No, I'm comfortable as is</span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input type="radio" name="q9" value="not-sure">
-                        <span class="option-icon">🤔</span>
-                        <span>I'm not sure</span>
-                    </label>
-                </li>
-            </ul>
-            <div class="btn-container">
-                <button class="btn btn-back" onclick="prevStep()">← Back</button>
-                <button class="btn btn-primary" onclick="nextStep()" disabled id="btn10">Continue →</button>
-            </div>
-        </div>
-
-        <!-- STEP 11: Job Challenges (Multi-select) -->
-        <div class="question-card" data-step="11" style="display:none;">
-            <div class="question-text">What are the challenges with your current job?</div>
-            <div class="question-subtext">Choose all that apply</div>
-            <ul class="options">
-                <li>
-                    <label>
-                        <input type="checkbox" name="q10" value="repetitive-draining">
-                        <span class="option-icon">😓</span>
-                        <span>It feels repetitive and draining</span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input type="checkbox" name="q10" value="underpaid">
-                        <span class="option-icon">💸</span>
-                        <span>I feel underpaid for my effort</span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input type="checkbox" name="q10" value="not-learning">
-                        <span class="option-icon">📚</span>
-                        <span>I'm not learning new skills</span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input type="checkbox" name="q10" value="not-fulfilled">
-                        <span class="option-icon">😞</span>
-                        <span>I don't feel fulfilled by what I do</span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input type="checkbox" name="q10" value="job-insecurity">
-                        <span class="option-icon">⚠️</span>
-                        <span>I worry my job isn't secure</span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input type="checkbox" name="q10" value="no-future">
-                        <span class="option-icon">🔮</span>
-                        <span>I don't see a future in my career</span>
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        <input type="checkbox" name="q10" value="other">
-                        <span class="option-icon">📦</span>
-                        <span>Other</span>
-                    </label>
-                </li>
-            </ul>
-            <div class="btn-container">
-                <button class="btn btn-back" onclick="prevStep()">← Back</button>
-                <button class="btn btn-primary" onclick="submitQuiz()" id="btn11">Get Diagnosis →</button>
+                <button class="btn btn-primary" onclick="submitQuiz()" id="btn7">Get Diagnosis →</button>
             </div>
         </div>
 
@@ -845,32 +725,28 @@
 
         <!-- Footer -->
         <div class="footer" style="text-align: center; color: #999999; font-size: 0.85rem; line-height: 1.6;">
-            <p style="margin-bottom: 8px;">🔒 Your answers are 100% private and will never be shared.</p>
-            <p>We use your responses to recommend the best path for YOUR journey — honesty helps us support you better.</p>
+            <p style="margin-bottom: 8px;">🔒 Your data is secure. Used only to personalize your results.</p>
         </div>
     </div>
 
     <script>
         // ✅ Your Google Apps Script Web App URL
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz-WFyVDXnszB8cP29aNetBZsegR9Fzy6CvPl4kVTMeEkhtLKvaIIicPaQe29cEXuITCg/exec';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw7BO81vdnbVh-vBjAysQ-k2eU8XZvHny151UkM4s0OL3TYeSKzw4AIZVnOGAi-stfWzw/exec';
 
         // Quiz data storage
         let quizData = {
-            q1: '',           // Gender (single-select)
+            q1: '',           // Biggest Challenge (single-select)
             q2: '',           // Age (single-select)
             q3: '',           // Goal (single-select)
             q4: '',           // Budget (single-select)
             q5: '',           // Timeline (single-select)
             q6: '',           // Experience (single-select)
             q7: [],           // Income Sources (multi-select)
-            q8: '',           // Work Schedule (single-select)
-            q9: '',           // Flexibility (single-select)
-            q10: [],          // Challenges (multi-select)
             profile: ''
         };
 
         let currentStep = 1;
-        const totalSteps = 11;
+        const totalSteps = 7;
 
         // Option selection handling (single-select)
         document.querySelectorAll('input[type="radio"]').forEach(input => {
@@ -943,6 +819,7 @@
         function updateProgress() {
             const percentage = (currentStep / totalSteps) * 100;
             document.getElementById('progressFill').style.width = percentage + '%';
+            document.getElementById('questionCounter').textContent = `Question ${currentStep} of ${totalSteps}`;
         }
 
         function updateNavButtons() {
@@ -1014,9 +891,6 @@
                 q5: quizData.q5 || '',
                 q6: quizData.q6 || '',
                 q7: Array.isArray(quizData.q7) ? quizData.q7.join(', ') : (quizData.q7 || ''),
-                q8: quizData.q8 || '',
-                q9: quizData.q9 || '',
-                q10: Array.isArray(quizData.q10) ? quizData.q10.join(', ') : (quizData.q10 || ''),
                 profile: quizData.profile || ''
             };
             
