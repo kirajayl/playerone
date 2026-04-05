@@ -4,6 +4,17 @@
  <head>
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
   <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <style>
+   /* Fix horizontal overflow on mobile */
+   html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+    box-sizing: border-box;
+   }
+   *, *::before, *::after {
+    box-sizing: inherit;
+   }
+  </style>
   <link as="font" crossorigin="" href="https://blueprint.the1percentclub.net/_next/static/media/e4af272ccee01ff0-s.p.woff2" rel="preload" type="font/woff2"/>
   <link as="image" href="./assets2/Gemini_Generated_Image_2qef822qef822qef.png" rel="preload"/>
   <link as="image" href="./assets2/image.png" rel="preload"/>
@@ -103,6 +114,61 @@ document.addEventListener('DOMContentLoaded', function() {
     
     console.log('FAQ handlers setup complete');
 });
+
+// Mobile Menu Toggle
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const desktopNav = document.getElementById('desktop-nav');
+    const hamburgerIcon = document.getElementById('hamburger-icon');
+    const closeIcon = document.getElementById('close-icon');
+    
+    function updateMenuVisibility() {
+        const isMobile = window.innerWidth < 768;
+        
+        if (isMobile) {
+            mobileMenuButton.style.display = 'flex';
+            desktopNav.style.display = 'none';
+        } else {
+            mobileMenuButton.style.display = 'none';
+            desktopNav.style.display = 'flex';
+            mobileMenu.style.display = 'none';
+            hamburgerIcon.style.display = 'block';
+            closeIcon.style.display = 'none';
+        }
+    }
+    
+    if (mobileMenuButton && mobileMenu && desktopNav) {
+        // Initial setup
+        updateMenuVisibility();
+        
+        mobileMenuButton.addEventListener('click', function() {
+            const isHidden = mobileMenu.style.display === 'none' || !mobileMenu.style.display;
+            
+            if (isHidden) {
+                mobileMenu.style.display = 'block';
+                hamburgerIcon.style.display = 'none';
+                closeIcon.style.display = 'block';
+            } else {
+                mobileMenu.style.display = 'none';
+                hamburgerIcon.style.display = 'block';
+                closeIcon.style.display = 'none';
+            }
+        });
+        
+        // Close menu when clicking a link
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenu.style.display = 'none';
+                hamburgerIcon.style.display = 'block';
+                closeIcon.style.display = 'none';
+            });
+        });
+        
+        // Handle window resize
+        window.addEventListener('resize', updateMenuVisibility);
+    }
+});
   </script>
   <style>
    #faq .glass-card:before, #faq .glass-card:after, #faq .glass-card::before, #faq .glass-card::after {
@@ -159,15 +225,38 @@ document.addEventListener('DOMContentLoaded', function() {
   </style>
  </head>
  <body class="__className_f367f3 antialiased">
-  <main style="background-color:#ffffff;overflow:visible">
-   <nav class="sticky top-0 z-50 w-full py-6 px-8 flex items-center justify-between bg-white border-b border-gray-200" style="background-color:#ffffff;border-bottom:1px solid rgba(0,0,0,0.1)">
+  <main style="background-color:#ffffff;overflow-x:hidden;max-width:100vw">
+   <nav class="sticky top-0 z-50 w-full py-6 px-8 flex items-center justify-between bg-white border-b border-gray-200" style="background-color:#ffffff;border-bottom:1px solid rgba(0,0,0,0.1);position:relative">
     <a class="text-xl font-bold tracking-tight hover:opacity-70 transition-opacity" href="#top" style="color:#000000">PlayerOne</a>
-    <div class="flex flex-col md:flex-row items-center gap-6">
-     <a class="text-sm hover:opacity-70 transition-opacity" href="#blueprint" style="color:#000000;margin-left:16px;margin-right:16px">Blueprint</a>
-     <a class="text-sm hover:opacity-70 transition-opacity" href="#how-it-works" style="color:#000000;margin-left:16px;margin-right:16px">How It Works</a>
-     <a class="text-sm hover:opacity-70 transition-opacity" href="#partners" style="color:#000000;margin-left:16px;margin-right:16px">Partners</a>
-     <a class="text-sm hover:opacity-70 transition-opacity" href="#faq" style="color:#000000;margin-left:16px;margin-right:16px">FAQ</a>
-     <a class="text-sm hover:opacity-70 transition-opacity" href="#final-cta" style="color:#000000;margin-left:16px;margin-right:16px">Join Now</a>
+    
+    <!-- Hamburger Menu Button (Mobile Only) -->
+    <button id="mobile-menu-button" style="background:none;border:none;cursor:pointer;display:none;align-items:center;justify-content:center;padding:8px" aria-label="Toggle menu">
+     <svg id="hamburger-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display:block;width:24px;height:24px;stroke:#000000;stroke-width:2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path>
+     </svg>
+     <svg id="close-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display:none;width:24px;height:24px;stroke:#000000;stroke-width:2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+     </svg>
+    </button>
+    
+    <!-- Desktop Navigation -->
+    <div id="desktop-nav" style="display:flex;flex-direction:row;align-items:center;gap:24px">
+     <a class="text-sm hover:opacity-70 transition-opacity" href="#blueprint" style="color:#000000">Blueprint</a>
+     <a class="text-sm hover:opacity-70 transition-opacity" href="#how-it-works" style="color:#000000">How It Works</a>
+     <a class="text-sm hover:opacity-70 transition-opacity" href="#partners" style="color:#000000">Partners</a>
+     <a class="text-sm hover:opacity-70 transition-opacity" href="#faq" style="color:#000000">FAQ</a>
+     <a class="text-sm hover:opacity-70 transition-opacity" href="#final-cta" style="color:#000000">Join Now</a>
+    </div>
+    
+    <!-- Mobile Navigation Menu -->
+    <div id="mobile-menu" style="display:none;position:absolute;top:100%;left:0;right:0;background-color:#ffffff;border-bottom:1px solid rgba(0,0,0,0.1);box-shadow:0 4px 6px rgba(0,0,0,0.1);z-index:40">
+     <div style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:24px">
+      <a class="text-sm hover:opacity-70 transition-opacity" href="#blueprint" style="color:#000000;text-decoration:none;padding:8px">Blueprint</a>
+      <a class="text-sm hover:opacity-70 transition-opacity" href="#how-it-works" style="color:#000000;text-decoration:none;padding:8px">How It Works</a>
+      <a class="text-sm hover:opacity-70 transition-opacity" href="#partners" style="color:#000000;text-decoration:none;padding:8px">Partners</a>
+      <a class="text-sm hover:opacity-70 transition-opacity" href="#faq" style="color:#000000;text-decoration:none;padding:8px">FAQ</a>
+      <a class="text-sm hover:opacity-70 transition-opacity" href="#final-cta" style="color:#000000;text-decoration:none;padding:8px">Join Now</a>
+     </div>
     </div>
    </nav>
    <section class="relative min-h-screen flex items-center overflow-hidden" id="top" style="background-color:#ffffff">
@@ -274,7 +363,7 @@ document.addEventListener('DOMContentLoaded', function() {
      </div>
      <div class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 mt-16">
       <div class="text-center">
-       <div class="glass-card rounded-2xl p-8 md:p-10" style="border:1px solid rgba(0,0,0,0.1);width:502px;height:544px;display:flex;flex-direction:column;justify-content:flex-start;padding-top:60px">
+       <div class="glass-card rounded-2xl p-8 md:p-10" style="border:1px solid rgba(0,0,0,0.1);width:100%;max-width:502px;height:544px;display:flex;flex-direction:column;justify-content:flex-start;padding-top:60px">
         <div class="w-56 h-56 mx-auto mb-4 rounded-xl overflow-hidden" style="background:rgba(0,0,0,0.05)">
          <img alt="NasDaily Logo" class="w-full h-full object-cover" src="assets2/Nas Daily.jpg"/>
         </div>
@@ -293,7 +382,7 @@ document.addEventListener('DOMContentLoaded', function() {
        +
       </div>
       <div class="text-center">
-       <div class="glass-card rounded-2xl p-8 md:p-10" style="border:1px solid rgba(0,0,0,0.1);width:502px;height:544px;display:flex;flex-direction:column;justify-content:flex-start;padding-top:60px">
+       <div class="glass-card rounded-2xl p-8 md:p-10" style="border:1px solid rgba(0,0,0,0.1);width:100%;max-width:502px;height:544px;display:flex;flex-direction:column;justify-content:flex-start;padding-top:60px">
         <div class="w-40 h-40 mx-auto mb-4 rounded-xl overflow-hidden" style="background:rgba(0,0,0,0.05)">
          <img alt="Iseigur Logo" class="w-full h-full object-cover" src="assets2/Iseigur Logo.png"/>
         </div>
@@ -315,7 +404,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
    </section>
    <section class="relative py-24 md:py-32 overflow-hidden" style="background-color:#ffffff">
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-[0.04] blur-[120px]" style="background-color:#ffffff">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-[0.04] blur-[120px]" style="background-color:#ffffff;max-width:100vw">
     </div>
     <div class="relative mx-auto max-w-5xl px-5">
      <div class="text-center mb-12">
@@ -409,7 +498,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
    </section>
    <section class="relative py-24 md:py-32" style="background-color:#ffffff">
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-[0.04] blur-[120px]" style="background-color:#ffffff">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-[0.04] blur-[120px]" style="background-color:#ffffff;max-width:100vw">
     </div>
     <div class="relative mx-auto max-w-4xl px-5">
      <div class="text-center mb-12">
@@ -510,7 +599,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
    </section>
    <section class="section-divider relative" id="tutorial" style="background-color:#ffffff; padding-top: 40px; padding-bottom: 40px;">
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-[0.04] blur-[120px]" style="background-color:#ffffff">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-[0.04] blur-[120px]" style="background-color:#ffffff;max-width:100vw">
     </div>
     <div class="relative mx-auto max-w-4xl px-5 py-16 md:py-22">
      <div class="" style="opacity: 1; transform: translateY(0px) translateZ(0px); transition: opacity 0.7s, transform 0.7s; will-change: opacity, transform;">
@@ -1421,7 +1510,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
    </section>
    <section class="relative py-24 md:py-32" style="background-color:#ffffff">
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-[0.04] blur-[120px]" style="background-color:#ffffff">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-[0.04] blur-[120px]" style="background-color:#ffffff;max-width:100vw">
     </div>
     <div class="relative mx-auto max-w-3xl px-5 text-center">
      <p class="text-sm uppercase tracking-[0.3em] font-medium" style="color:rgba(0,0,0,0.55)">
@@ -1890,7 +1979,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
    </section>
    <section class="relative overflow-hidden" id="vision" style="background-color:#ffffff;border:none!important;border-bottom:none!important;margin-bottom:0; padding-top: 60px; padding-bottom: 60px;">
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-[0.05] blur-[150px]" style="background-color:#ffffff">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-[0.05] blur-[150px] md:w-[600px] md:h-[600px]" style="background-color:#ffffff;max-width:100vw;max-height:100vw">
     </div>
     <div class="relative mx-auto max-w-3xl px-5 py-24 md:py-36 text-center" style="border:none!important;border-bottom:none!important">
      <div class="" style="opacity:1;transform:translateY(30px) translateZ(0);transition:opacity 0.7s ease 0s, transform 0.7s ease 0s;will-change:opacity, transform">
