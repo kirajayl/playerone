@@ -2,11 +2,7 @@
   "rewrites": [
     {
       "source": "/",
-      "destination": "/playerone.html"
-    },
-    {
-      "source": "/quiz",
-      "destination": "/quiz.html"
+      "destination": "/index-v2.html"
     }
   ]
 }
