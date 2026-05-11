@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tee -a C:/Windows/System32/drivers/etc/hosts)",
+      "Bash(echo \"Need admin: run: echo 127.0.0.1 playerone.the1percentclub.net >> C:\\\\\\\\Windows\\\\\\\\System32\\\\\\\\drivers\\\\\\\\etc\\\\\\\\hosts\")",
+      "Bash(powershell:*)",
+      "Bash(curl -s http://127.0.0.1/quiz.html)",
+      "Bash(python:*)",
+      "Bash(code --list-extensions)",
+      "Bash(curl -s http://127.0.0.1:80/quiz.html)",
+      "Bash(cmd:*)"
+    ]
+  }
+}
